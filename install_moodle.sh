@@ -23,6 +23,9 @@ sudo apt-get install -t ${VERSION_CODENAME}-backports cockpit
 # Even though moodle is a huge PHP application it has advanced caching features. So Nginx is our choice:
 sudo apt-get install nginx
 
+#Install PHP and its dependencies:
+sudo apt-get install php-fpm php-curl php-gd php-xmlrpc php-intl php-xml php-zip php-mbstring php-soap php-pgsql
+
 #Install MariaDB vs MySQL:
 #Postgres is a very reliable database. Technically MariaDB or MySQL should do to but we're focusing on speed:
 #sudo apt-get install postgresql postgresql-contrib
@@ -69,6 +72,39 @@ server {
     deny all;
   }
 }
+
+#Your phpMyAdmin files are in /usr/share/phpmyadmin/ directory. Save and close the file. Then test Nginx configurations.
+sudo nginx -t
+sudo systemctl reload nginx
+
+#Log into MariaDB server from the command line.
+sudo mariadb -u root
+#Create an admin user with password authentication.
+create user admin@localhost identified by 'your-chosen-password';
+#Grant all privileges on all databases.
+grant all privileges on *.* to admin@localhost with grant option;
+#Flush privileges and exit;
+flush privileges;
+exit;
+
+#Using a Different Port
+sudo nano /etc/nginx/conf.d/phpmyadmin.conf
+#Find the following two lines:
+#listen [::]:443 ssl ipv6only=on; # managed by Certbot
+#listen 443 ssl; # managed by Certbot
+#Change 443 to a different port, for example, 8443.
+#listen [::]:8443 ssl ipv6only=on; # managed by Certbot
+#listen 8443 ssl; # managed by Certbot
+#You can also add http2 to them like below to enable HTTP/2 protocol.
+#listen [::]:8443 ssl http2 ipv6only=on; # managed by Certbot
+#listen 8443 ssl http2; # managed by Certbot
+#Save and close the file. Then test Nginx configurations.
+
+sudo nginx -t
+#If the test is successful, reload Nginx for the changes to take effect.
+sudo systemctl reload nginx
+#Now you can access phpMyAdmin via:
+#https://pma.example.com:8443
 
 #switch to moodle source directory
 cd /usr/share/nginx/html/moodle;
