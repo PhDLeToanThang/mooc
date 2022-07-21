@@ -37,8 +37,10 @@ sudo apt update
 sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-mcrypt php8.0-ldap php8.0-zip php8.0-curl 
 
 #Open PHP-FPM config file.
-sudo nano /etc/php/8.0/fpm/php.ini
 
+
+#sudo nano /etc/php/8.0/fpm/php.ini
+cat > /etc/php/8.0/fpm/php.ini <<END
 #Add/Update the values as shown. You may change it as per your requirement.
 file_uploads = On 
 allow_url_fopen = On 
