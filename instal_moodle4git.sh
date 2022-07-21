@@ -38,7 +38,6 @@ sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-s
 
 #Open PHP-FPM config file.
 
-
 #sudo nano /etc/php/8.0/fpm/php.ini
 cat > /etc/php/8.0/fpm/php.ini <<END
 #Add/Update the values as shown. You may change it as per your requirement.
@@ -49,14 +48,15 @@ upload_max_filesize = 4096M
 max_execution_time = 360 
 cgi.fix_pathinfo = 0 
 date.timezone = asia/ho_chi_minh
-
+END
+ 
 systemctl restart php8.0-fpm
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
 sudo mysql -u root -p
 create database moocdatabase;
-create user moocuser@localhost identified by 'PA$$w0rd';
+create user moocuser@localhost identified by 'P@$$w0rd';
 grant all privileges on moocdatabase.* to moocuser@localhost;
 #Flush privileges to apply changes.
 flush privileges;
@@ -66,13 +66,15 @@ sudo mysql -u root -p
 SHOW DATABASES;
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
-nano /etc/mysql/mariadb.conf.d/50-server.cnf
+#nano /etc/mysql/mariadb.conf.d/50-server.cnf
 #Add the following lines inside the [mysqld] section: 
-
+cat > /etc/mysql/mariadb.conf.d/50-server.cnf <<END
 [mysqld]
 innodb_file_format = Barracuda
 innodb_file_per_table = 1
 innodb_large_prefix = ON
+END
+
 #Save the file then restart the MariaDB service to apply the changes.
 systemctl restart mariadb
 
@@ -98,3 +100,24 @@ sudo git checkout MOODLE_400_STABLE
 #Run the following command to extract package to NGINX website root folder.
 sudo cp -R /opt/moodle /var/www/html/mooc.cloud.edu.vn
 sudo mkdir /var/www/html/moocdata
+#Change the folder permissions.
+sudo chown -R www-data:www-data /var/www/html/mooc.cloud.edu.vn/ 
+sudo chmod -R 755 /var/www/html/mooc.cloud.edu.vn/ 
+sudo chown www-data /var/www/html/moocdata
+
+#Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
+cp /var/www/html/mooc.cloud.edu.vn/config-dist.php /var/www/html/mooc.cloud.edu.vn/config.php
+#nano /var/www/html/mooc.cloud.edu.vn/config.php
+#And, replaced it with the following line: 
+
+echo '"$CFG->dbtype    = 'mariadb';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dblibrary = 'native';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dbhost = 'localhost';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dbname = 'moocdatabase';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dbuser = 'moocuser';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dbpass = 'P@$$w0rd';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->wwwroot ='http://mooc.cloud.edu.vn';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '"$CFG->dataroot ='/var/www/html/moocdata';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+
+#Step 7. Configure NGINX
+
