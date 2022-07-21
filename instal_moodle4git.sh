@@ -54,7 +54,7 @@ systemctl restart php8.0-fpm
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
-sudo mysql -u root -p
+#sudo mysql -u root -p
 #create database moocdatabase;
 #create user moocuser@localhost identified by 'P@$$w0rd';
 #grant all privileges on moocdatabase.* to moocuser@localhost;
