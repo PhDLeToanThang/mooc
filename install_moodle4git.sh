@@ -48,6 +48,9 @@ upload_max_filesize = 4096M
 max_execution_time = 360 
 cgi.fix_pathinfo = 0 
 date.timezone = asia/ho_chi_minh
+max_input_time = 60
+max_input_nesting_level = 64
+max_input_vars = 5000
 END
  
 systemctl restart php8.0-fpm
@@ -111,14 +114,92 @@ cp /var/www/html/mooc.cloud.edu.vn/config-dist.php /var/www/html/mooc.cloud.edu.
 #nano /var/www/html/mooc.cloud.edu.vn/config.php
 #And, replaced it with the following line: 
 
-echo '"$CFG->dbtype    = 'mariadb';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dblibrary = 'native';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dbhost = 'localhost';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dbname = 'moocdatabase';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dbuser = 'moocuser';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dbpass = 'P@$$w0rd';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->wwwroot ='http://mooc.cloud.edu.vn';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '"$CFG->dataroot ='/var/www/html/moocdata';"' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbtype    = "mariadb";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dblibrary = "native";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbhost = "localhost";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbname = "moocdatabase";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbuser = "moocuser";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbpass = "P@$$w0rd";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->wwwroot ="http://mooc.cloud.edu.vn";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dataroot ="/var/www/html/moocdata";' >> /var/www/html/mooc.cloud.edu.vn/config.php
 
 #Step 7. Configure NGINX
+
+#Next, you will need to create an Nginx virtual host configuration file to host Moodle:
+#$ nano /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo 'server {'  >> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    listen 80;' >> 
+echo '    root /var/www/html/mooc.cloud.edu.vn;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    server_name mooc.cloud.edu.vn;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    client_max_body_size 512M;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    autoindex off;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    location / {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '        try_files $uri $uri/ =404;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    location /dataroot/ {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '      internal;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '      alias /var/www/html/moocdata/;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    location ~ [^/].php(/|$) {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '        include snippets/fastcgi-php.conf;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '        fastcgi_pass unix:/run/php/php8.0-fpm.sock;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '        include fastcgi_params;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '	location ~ ^/(doc|sql|setup)/{'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '		deny all;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '	}'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '}'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+
+#Save and close the file then verify the Nginx for any syntax error with the following command: 
+nginx -t
+
+#8. Setup and Configure PhpMyAdmin
+sudo apt update
+sudo apt install phpmyadmin
+
+
+#9. Cách gỡ apache:
+sudo service apache2 stop
+sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
+sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
+
+sudo apt-get autoremove
+whereis apache2
+apache2: /etc/apache2
+sudo rm -rf /etc/apache2
+
+sudo ln -s /usr/share/phpmyadmin /var/www/html/mooc.cloud.edu.vn/phpmyadmin
+sudo chown -R root:root /var/lib/phpmyadmin
+sudo nginx -t
+
+#10. Nâng cấp PhpmyAdmin lên version 5.2:
+sudo mv /usr/share/phpmyadmin/ /usr/share/phpmyadmin.bak
+sudo mkdir /usr/share/phpmyadmin/
+cd /usr/share/phpmyadmin/
+sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo tar xzf phpMyAdmin-5.2.0-all-languages.tar.gz
+#Once extracted, list folder.
+ls
+#You should see a new folder phpMyAdmin-5.2.0-all-languages
+#We want to move the contents of this folder to /usr/share/phpmyadmin
+sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
+ls /usr/share/phpmyadmin
+sudo systemctl restart nginx
+systemctl restart php8.0-fpm.service
+
+#11. Install Certbot
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d mooc.cloud.edu.vn
+
+# You should test your configuration at:
+# https://www.ssllabs.com/ssltest/analyze.html?d=mooc.cloud.edu.vn
+#/etc/letsencrypt/live/mooc.cloud.edu.vn/fullchain.pem
+#   Your key file has been saved at:
+#   /etc/letsencrypt/live/mooc.cloud.edu.vn/privkey.pem
+#   Your cert will expire on 2022-10-20. To obtain a new or tweaked
+#   version of this certificate in the future, simply run certbot again
+#   with the "certonly" option. To non-interactively renew *all* of
+#   your certificates, run "certbot renew"
 
