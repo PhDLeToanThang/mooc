@@ -1,5 +1,3 @@
-clear
-cd ~
 #Step 1. Install NGINX
 sudo apt-get update
 sudo apt-get install nginx
