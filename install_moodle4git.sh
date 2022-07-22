@@ -54,16 +54,17 @@ systemctl restart php8.0-fpm
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
-#sudo mysql -u root -p
-#create database moocdatabase;
-#create user moocuser@localhost identified by 'P@$$w0rd';
-#grant all privileges on moocdatabase.* to moocuser@localhost;
+sudo mysql -u root -p
+create database moocdatabase;
+create user moocuser@localhost identified by 'P@$$w0rd';
+grant all privileges on moocdatabase.* to moocuser@localhost;
 #Flush privileges to apply changes.
-#flush privileges;
+flush privileges;
+SHOW DATABASES;
 #exit;
 
-sudo mysql -u root -p
-SHOW DATABASES;
+#sudo mysql -u root -p
+
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -89,12 +90,12 @@ sudo git clone git://git.moodle.org/moodle.git
 #Change directory into the downloaded Moodle folder 
 cd moodle
 #Retrieve a list of each branch available 
-sudo git branch -a
+#sudo git branch -a
 #Tell git which branch to track or use 
-sudo git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE
+#sudo git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE
 
 #if get error
-#git fetch
+git fetch
 #Finally, Check out the Moodle version specified 
 sudo git checkout MOODLE_400_STABLE
 #Run the following command to extract package to NGINX website root folder.
