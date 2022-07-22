@@ -54,16 +54,17 @@ systemctl restart php8.0-fpm
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
-#sudo mysql -u root -p
-#create database moocdatabase;
-#create user moocuser@localhost identified by 'P@$$w0rd';
-#grant all privileges on moocdatabase.* to moocuser@localhost;
+sudo mysql -u root -p
+create database moocdatabase;
+create user moocuser@localhost identified by 'P@$$w0rd';
+grant all privileges on moocdatabase.* to moocuser@localhost;
 #Flush privileges to apply changes.
-#flush privileges;
+flush privileges;
+SHOW DATABASES;
 #exit;
 
-sudo mysql -u root -p
-SHOW DATABASES;
+#sudo mysql -u root -p
+
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
