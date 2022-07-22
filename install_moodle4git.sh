@@ -89,12 +89,12 @@ sudo git clone git://git.moodle.org/moodle.git
 #Change directory into the downloaded Moodle folder 
 cd moodle
 #Retrieve a list of each branch available 
-sudo git branch -a
+#sudo git branch -a
 #Tell git which branch to track or use 
-sudo git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE
+#sudo git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE
 
 #if get error
-#git fetch
+git fetch
 #Finally, Check out the Moodle version specified 
 sudo git checkout MOODLE_400_STABLE
 #Run the following command to extract package to NGINX website root folder.
