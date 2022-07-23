@@ -1,5 +1,11 @@
 clear
 cd ~
+
+FQDN = "mooc.cloud.edu.vn"
+FOLDERDATA = "moocdata"
+GitMoodleversion ="MOODLE_400_STABLE"
+
+
 #Step 1. Install NGINX
 sudo apt-get update
 sudo apt-get install nginx
@@ -95,62 +101,62 @@ cd moodle
 #Retrieve a list of each branch available 
 #sudo git branch -a
 #Tell git which branch to track or use 
-#sudo git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE
+#sudo git branch --track $GitMoodleversion origin/$GitMoodleversion
 
 #if get error
 git fetch
 #Finally, Check out the Moodle version specified 
-sudo git checkout MOODLE_400_STABLE
+sudo git checkout $GitMoodleversion
 #Run the following command to extract package to NGINX website root folder.
-sudo cp -R /opt/moodle /var/www/html/mooc.cloud.edu.vn
-sudo mkdir /var/www/html/moocdata
+sudo cp -R /opt/moodle /var/www/html/$FQDN
+sudo mkdir /var/www/html/$FOLDERDATA
 #Change the folder permissions.
-sudo chown -R www-data:www-data /var/www/html/mooc.cloud.edu.vn/ 
-sudo chmod -R 755 /var/www/html/mooc.cloud.edu.vn/ 
-sudo chown www-data /var/www/html/moocdata
+sudo chown -R www-data:www-data /var/www/html/$FQDN/ 
+sudo chmod -R 755 /var/www/html/$FQDN/ 
+sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
-cp /var/www/html/mooc.cloud.edu.vn/config-dist.php /var/www/html/mooc.cloud.edu.vn/config.php
-#nano /var/www/html/mooc.cloud.edu.vn/config.php
+cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
+#nano /var/www/html/$FQDN/config.php
 #And, replaced it with the following line: 
 
-echo '$CFG->dbtype    = "mariadb";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dblibrary = "native";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dbhost = "localhost";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dbname = "moocdatabase";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dbuser = "moocuser";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dbpass = "P@$$w0rd";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->wwwroot ="http://mooc.cloud.edu.vn";' >> /var/www/html/mooc.cloud.edu.vn/config.php
-echo '$CFG->dataroot ="/var/www/html/moocdata";' >> /var/www/html/mooc.cloud.edu.vn/config.php
+echo '$CFG->dbtype    = "mariadb";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dblibrary = "native";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost = "localhost";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname = "moocdatabase";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser = "moocuser";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass = "P@$$w0rd";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot ="http://'$FQDN'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot ="/var/www/html/'$FOLDERDATA'";' >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
-#$ nano /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo 'server {'  >> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+#$ nano /etc/nginx/conf.d/$FQDN.conf
+echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
 echo '    listen 80;' >> 
-echo '    root /var/www/html/mooc.cloud.edu.vn;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    server_name mooc.cloud.edu.vn;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    client_max_body_size 512M;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    autoindex off;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    location / {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '        try_files $uri $uri/ =404;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    location /dataroot/ {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '      internal;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '      alias /var/www/html/moocdata/;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    location ~ [^/].php(/|$) {'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '        include snippets/fastcgi-php.conf;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '        fastcgi_pass unix:/run/php/php8.0-fpm.sock;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '        include fastcgi_params;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '    }'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '	location ~ ^/(doc|sql|setup)/{'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '		deny all;'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '	}'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
-echo '}'>> /etc/nginx/conf.d/mooc.cloud.edu.vn.conf
+echo '    root /var/www/html/'$FQDN';'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    server_name '$FQDN';'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    client_max_body_size 512M;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    autoindex off;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    location / {'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        try_files $uri $uri/ =404;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    location /dataroot/ {'>> /etc/nginx/conf.d/$FQDN.conf
+echo '      internal;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '      alias /var/www/html/'$FOLDERDATA'/;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    location ~ [^/].php(/|$) {'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        include snippets/fastcgi-php.conf;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        fastcgi_pass unix:/run/php/php8.0-fpm.sock;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        include fastcgi_params;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
+echo '	location ~ ^/(doc|sql|setup)/{'>> /etc/nginx/conf.d/$FQDN.conf
+echo '		deny all;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '	}'>> /etc/nginx/conf.d/$FQDN.conf
+echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 
 #Save and close the file then verify the Nginx for any syntax error with the following command: 
 nginx -t
@@ -170,7 +176,7 @@ whereis apache2
 apache2: /etc/apache2
 sudo rm -rf /etc/apache2
 
-sudo ln -s /usr/share/phpmyadmin /var/www/html/mooc.cloud.edu.vn/phpmyadmin
+sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/phpmyadmin
 sudo chown -R root:root /var/lib/phpmyadmin
 sudo nginx -t
 
@@ -191,13 +197,13 @@ systemctl restart php8.0-fpm.service
 
 #11. Install Certbot
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d mooc.cloud.edu.vn
+sudo certbot --nginx -d $FQDN
 
 # You should test your configuration at:
-# https://www.ssllabs.com/ssltest/analyze.html?d=mooc.cloud.edu.vn
-#/etc/letsencrypt/live/mooc.cloud.edu.vn/fullchain.pem
+# https://www.ssllabs.com/ssltest/analyze.html?d=$FQDN
+#/etc/letsencrypt/live/$FQDN/fullchain.pem
 #   Your key file has been saved at:
-#   /etc/letsencrypt/live/mooc.cloud.edu.vn/privkey.pem
+#   /etc/letsencrypt/live/$FQDN/privkey.pem
 #   Your cert will expire on 2022-10-20. To obtain a new or tweaked
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
