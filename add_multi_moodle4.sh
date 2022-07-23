@@ -1,14 +1,14 @@
 clear
 cd ~
 
-FQDN = "digital.cloud.edu.vn"
-FOLDERDATA = "digitaldata"
-GitMoodleversion ="MOODLE_400_STABLE"
-dbname ="digitaldatbase"
-dbuser ="digitaluser"
-dbpass ="P@$$w0rd"
-dbtype ="mariadb"
-dbhost ="localhost"
+FQDN="digital.cloud.edu.vn"
+FOLDERDATA="digitaldata"
+GitMoodleversion="MOODLE_400_STABLE"
+dbname="digitaldatbase"
+dbuser="digitaluser"
+dbpass="P@$$w0rd"
+dbtype="mariadb"
+dbhost="localhost"
 
 #Step 1. Install NGINX
 
@@ -27,7 +27,7 @@ grant all privileges on digitaldatabase.* to digitaluser@localhost;
 #Flush privileges to apply changes.
 flush privileges;
 SHOW DATABASES;
-#exit;
+exit;
 
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
