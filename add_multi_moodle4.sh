@@ -62,19 +62,19 @@ echo '<?php' >> /var/www/html/$FQDN/config.php
 echo 'unset($CFG);'  >> /var/www/html/$FQDN/config.php
 echo 'global $CFG;'  >> /var/www/html/$FQDN/config.php
 echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbtype    = '${dbtype}';'  >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbtype    = '$dbtype';'  >> /var/www/html/$FQDN/config.php
 echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost    = '${dbhost}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname    = '${dbname}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser    = '${dbuser}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass    = '${dbpass}';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost    = '$dbhost';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname    = '$dbname';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser    = '$dbuser';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass    = '$dbpass';' >> /var/www/html/$FQDN/config.php
 echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
 echo '$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => '','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);'>> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot   = 'http://${FQDN}';'>> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot  = '/var/www/html/${FOLDERDATA}';'>> /var/www/html/$FQDN/config.php
-echo '$CFG->directorypermissions = 02777;'>> /var/www/html/$FQDN/config.php
-echo '$CFG->admin = 'admin';'>> /var/www/html/$FQDN/config.php
-echo 'require_once(__DIR__ . '/lib/setup.php');'>> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot   = 'http://$FQDN';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
+echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
+echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
 
 
 #Step 7. Configure NGINX
