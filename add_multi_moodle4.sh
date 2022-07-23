@@ -20,14 +20,14 @@ dbhost="localhost"
 
 #Step 4. Create Moodle Database
 
-sudo mysql -u root -p
-create database digitaldatabase;
-create user digitaluser@localhost identified by 'P@$$w0rd';
-grant all privileges on digitaldatabase.* to digitaluser@localhost;
+#sudo mysql -u root -p
+#create database digitaldatabase;
+#create user digitaluser@localhost identified by 'P@$$w0rd';
+#grant all privileges on digitaldatabase.* to digitaluser@localhost;
 #Flush privileges to apply changes.
-flush privileges;
-SHOW DATABASES;
-exit;
+#flush privileges;
+#SHOW DATABASES;
+#exit;
 
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
