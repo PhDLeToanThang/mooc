@@ -62,27 +62,26 @@ echo '<?php' >> /var/www/html/$FQDN/config.php
 echo 'unset($CFG);'  >> /var/www/html/$FQDN/config.php
 echo 'global $CFG;'  >> /var/www/html/$FQDN/config.php
 echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbtype    = '${dbtype}';'  >> /var/www/html/$FQDN/config.php
-echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost    = '${dbhost}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname    = '${dbname}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser    = '${dbuser}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass    = '${dbpass}';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbtype    = "${dbtype}";'  >> /var/www/html/$FQDN/config.php
+echo '$CFG->dblibrary = "native";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost    = "${dbhost}";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname    = "${dbname}";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser    = "${dbuser}";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass    = "${dbpass}";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->prefix    = "mdl_";' >> /var/www/html/$FQDN/config.php
 echo '$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => '','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);'>> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot   = 'http://${FQDN}';'>> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot  = '/var/www/html/${FOLDERDATA}';'>> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot   = "http://${FQDN}";'>> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot  = "/var/www/html/${FOLDERDATA}";'>> /var/www/html/$FQDN/config.php
 echo '$CFG->directorypermissions = 02777;'>> /var/www/html/$FQDN/config.php
-echo '$CFG->admin = 'admin';'>> /var/www/html/$FQDN/config.php
+echo '$CFG->admin = "admin";'>> /var/www/html/$FQDN/config.php
 echo 'require_once(__DIR__ . '/lib/setup.php');'>> /var/www/html/$FQDN/config.php
 
 
 #Step 7. Configure NGINX
-
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
-#$ nano /etc/nginx/conf.d/$FQDN.conf
+
 echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
-echo '    listen 80;' >> 
+echo '    listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    root /var/www/html/${FQDN};'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    server_name ${FQDN};'>> /etc/nginx/conf.d/$FQDN.conf
@@ -130,4 +129,3 @@ sudo certbot --nginx -d $FQDN
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
-
