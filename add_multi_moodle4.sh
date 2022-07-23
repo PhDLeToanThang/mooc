@@ -4,7 +4,7 @@ cd ~
 FQDN="digital.cloud.edu.vn"
 FOLDERDATA="digitaldata"
 GitMoodleversion="MOODLE_400_STABLE"
-dbname="digitaldatbase"
+dbname="digitaldatabase"
 dbuser="digitaluser"
 dbpass="P@$$w0rd"
 dbtype="mariadb"
