@@ -1,10 +1,9 @@
 clear
 cd ~
 
-FQDN = "mooc.cloud.edu.vn"
-FOLDERDATA = "moocdata"
-GitMoodleversion ="MOODLE_400_STABLE"
-
+FQDN="mooc.cloud.edu.vn"
+FOLDERDATA="moocdata"
+GitMoodleversion="MOODLE_400_STABLE"
 
 #Step 1. Install NGINX
 sudo apt-get update
