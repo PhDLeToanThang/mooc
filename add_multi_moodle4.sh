@@ -82,9 +82,9 @@ echo 'require_once(__DIR__ . '/lib/setup.php');'>> /var/www/html/$FQDN/config.ph
 
 echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
 echo '    listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
-echo '    root /var/www/html/${FQDN};'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    root /var/www/html/$FQDN;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/$FQDN.conf
-echo '    server_name ${FQDN};'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    server_name $FQDN;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    client_max_body_size 512M;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    autoindex off;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    location / {'>> /etc/nginx/conf.d/$FQDN.conf
@@ -92,7 +92,7 @@ echo '        try_files $uri $uri/ =404;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    location /dataroot/ {'>> /etc/nginx/conf.d/$FQDN.conf
 echo '      internal;'>> /etc/nginx/conf.d/$FQDN.conf
-echo '      alias /var/www/html/${FOLDERDATA}/;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '      alias /var/www/html/$FOLDERDATA/;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    location ~ [^/].php(/|$) {'>> /etc/nginx/conf.d/$FQDN.conf
 echo '        include snippets/fastcgi-php.conf;'>> /etc/nginx/conf.d/$FQDN.conf
