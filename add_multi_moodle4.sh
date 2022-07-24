@@ -1,6 +1,6 @@
 clear
 cd ~
-
+############### Tham số cần thay đổi ở đây ###################
 FQDN="digital.cloud.edu.vn"
 FOLDERDATA="digitaldata"
 GitMoodleversion="MOODLE_400_STABLE"
@@ -10,11 +10,10 @@ dbpass="P@$$w0rd"
 dbtype="mariadb"
 dbhost="localhost"
 
+############### Các bước thông thường để cài đặt đã được bỏ qua #########
 #Step 1. Install NGINX
 
-
 #Step 2. Install MariaDB/MySQL
-
 
 #Step 3. Install PHP-FPM & Related modules
 
@@ -39,15 +38,20 @@ sudo apt install git
 cd /opt
 #Run the following command to download Moodle package.
 #Download the Moodle Code and Index 
+
 sudo git clone git://git.moodle.org/moodle.git
+
 #Change directory into the downloaded Moodle folder 
 cd moodle
 git fetch
+
 #Finally, Check out the Moodle version specified 
 sudo git checkout $GitMoodleversion
+
 #Run the following command to extract package to NGINX website root folder.
 sudo cp -R /opt/moodle /var/www/html/$FQDN
 sudo mkdir /var/www/html/$FOLDERDATA
+
 #Change the folder permissions.
 sudo chown -R www-data:www-data /var/www/html/$FQDN/ 
 sudo chmod -R 755 /var/www/html/$FQDN/ 
@@ -75,7 +79,6 @@ echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/con
 echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
 echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
 echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
-
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
@@ -109,7 +112,6 @@ echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 nginx -t
 
 #8. Setup and Configure PhpMyAdmin
-
 
 #9. Cách gỡ apache:
 
