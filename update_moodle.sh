@@ -3,10 +3,10 @@
 folder_webmoodle="mooc.cloud.edu.vn"
 
 # switch to moodle source directory
-cd /usr/share/nginx/html/moodle;
+cd /usr/share/nginx/html/$folder_webmoodle;
 
 # put moodle into maintenance mode
-sudo -u www-data php /usr/share/nginx/html/moodle/admin/cli/maintenance.php --enable;
+sudo -u www-data php /usr/share/nginx/html/$folder_webmoodle/admin/cli/maintenance.php --enable;
 
 # pull changes
 git pull;
