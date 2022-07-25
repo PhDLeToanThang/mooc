@@ -26,7 +26,7 @@ phpmyadmin="mysqladmin"   # Đổi tên thư mục phpmyadmin khi add link symbo
 #!/bin/bash
 
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_general_ci";
-mysql -uroot -prootpassword -e "CREATE USER $dbuser@'127.0.0.1' IDENTIFIED BY '$dbpass'";
+mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
 mysql -uroot -prootpassword -e "flush privileges";
 mysql -uroot -prootpassword -e "SHOW DATABASES";
@@ -64,23 +64,23 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 #nano /var/www/html/$FQDN/config.php
 #And, replaced it with the following line: 
 
-echo '<?php' >> /var/www/html/$FQDN/config.php
-echo 'unset($CFG);'  >> /var/www/html/$FQDN/config.php
-echo 'global $CFG;'  >> /var/www/html/$FQDN/config.php
-echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbtype    = '$dbtype';'  >> /var/www/html/$FQDN/config.php
-echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost    = '$dbhost';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname    = '$dbname';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser    = '$dbuser';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass    = '$dbpass';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => '','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);'>> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot   = 'http://$FQDN';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
-echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
-echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
+echo "<?php" >> /var/www/html/$FQDN/config.php
+echo "unset($CFG);"  >> /var/www/html/$FQDN/config.php
+echo "global $CFG;"  >> /var/www/html/$FQDN/config.php
+echo "$CFG = new stdClass();" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dbtype    = '$dbtype';"  >> /var/www/html/$FQDN/config.php
+echo "$CFG->dblibrary = 'native';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dbhost    = '$dbhost';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dbname    = '$dbname';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dbuser    = '$dbuser';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dbpass    = '$dbpass';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->prefix    = 'mdl_';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => ','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);" >> /var/www/html/$FQDN/config.php
+echo "$CFG->wwwroot   = 'http://$FQDN';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->dataroot  = '/var/www/html/$FOLDERDATA';" >> /var/www/html/$FQDN/config.php
+echo "$CFG->directorypermissions = 02777;" >> /var/www/html/$FQDN/config.php
+echo "$CFG->admin = 'admin';" >> /var/www/html/$FQDN/config.php
+echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
