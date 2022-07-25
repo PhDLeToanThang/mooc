@@ -1,10 +1,10 @@
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
-FQDN="elearning.atcom.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+FQDN="demo.cloud.edu.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
 FQDN1="lms.atcom.vn"		# Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
 FQDN2="mooc.atcom.vn"       # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-FQDN3="demo.cloud.edu.vn"   # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+FQDN3="elearning.atcom.vn"   # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
 
 FOLDERDATA="lmsatcdata"
 GitMoodleversion="MOODLE_400_STABLE"
