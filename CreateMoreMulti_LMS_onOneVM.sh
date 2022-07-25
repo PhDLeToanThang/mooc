@@ -1,4 +1,3 @@
-#!/bin/bash
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
@@ -30,7 +29,7 @@ else
 #Step 3. Install PHP-FPM & Related modules
 
 #Step 4. Create Moodle Database
-
+#!/bin/bash
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
