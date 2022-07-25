@@ -1,25 +1,16 @@
+#!/bin/bash
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
-echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
-read -e FQDN
-echo "FQDN1: e.g: lms.cloud.vn"  # Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-read -e FQDN1
-echo "FQDN2: e.g: mooc.company.vn"  # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-read -e FQDN2
-echo "FQDN3: e.g: elearning.company"  # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-read -e FQDN3
-echo "dbname: e.g: demodata"   # Tên DBNane
-read -e dbname
-echo "dbuser: e.g: userdata"   # Tên User access DB lmsatcuser
-read -e dbuser
-echo "Database Password: e.g: P@$$w0rd-1.22"
-read -s dbpass
-echo "phpmyadmin folder name: e.g: phpmyadmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
-read -e phpmyadmin
-echo "Moodle Folder Data: e.g: moodledata"   # Tên Thư mục chưa Data vs Cache
-read -e FOLDERDATA
-
+FQDN="digital.cloud.edu.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+FQDN1="lms.cloud.edu.vn"  # Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+FQDN2="demo.cloud.edu.vn"  # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+FQDN3="elearning.cloud.edu.vn"  # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+dbname="digitaldata"   # Tên DBNane
+dbuser="digitaluser"   # Tên User access DB lmsatcuser
+dbpass="P@$$w0rd-1.22"
+phpmyadmin="mysqladmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
+FOLDERDATA="digitaldata"   # Tên Thư mục chưa Data vs Cache
 dbtype="mariadb"
 dbhost="localhost"         
 GitMoodleversion="MOODLE_400_STABLE"
@@ -39,7 +30,6 @@ else
 #Step 3. Install PHP-FPM & Related modules
 
 #Step 4. Create Moodle Database
-#!/bin/bash
 
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
