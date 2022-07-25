@@ -1,8 +1,6 @@
 # File name: install_moodle.sh
 # 
-# 
 cd ~
-#
 clear
 sudo apt-get -y update
 sudo apt-get -y upgrade
