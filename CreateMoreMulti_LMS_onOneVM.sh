@@ -1,19 +1,36 @@
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
-FQDN="demo.cloud.edu.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
-FQDN1="lms.atcom.vn"		# Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-FQDN2="mooc.atcom.vn"       # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-FQDN3="elearning.atcom.vn"   # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+read -e FQDN
+echo "FQDN1: e.g: lms.cloud.vn"  # Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+read -e FQDN1
+echo "FQDN2: e.g: mooc.company.vn"  # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+read -e FQDN2
+echo "FQDN3: e.g: elearning.company"  # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
+read -e FQDN3
+
+echo "dbname: e.g: demodata"   # Tên DBNane
+read -e dbname
+echo "dbuser: e.g: userdata"   # Tên User access DB lmsatcuser
+read -e dbuser
+
+echo "Database Password: e.g: P@$$w0rd-1.22"
+read -s dbpass
+
+dbtype="mariadb"
+dbhost="localhost"         
+phpmyadmin="adminmysql"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
 
 FOLDERDATA="lmsatcdata"
 GitMoodleversion="MOODLE_400_STABLE"
-dbname="lmsatcdatabase"
-dbuser="lmsatcuser"
-dbpass="P@$$w0rd"
-dbtype="mariadb"
-dbhost="localhost"         
-phpmyadmin="mysqladmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
+
+echo "run install? (y/n)"
+read -e run
+if [ "$run" == n ] ; then
+  exit
+else
+
 
 ############### Các bước thông thường để cài đặt đã được bỏ qua #########
 #Step 1. Install NGINX
@@ -25,7 +42,7 @@ phpmyadmin="mysqladmin"   # Đổi tên thư mục phpmyadmin khi add link symbo
 #Step 4. Create Moodle Database
 #!/bin/bash
 
-mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_general_ci";
+mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
 mysql -uroot -prootpassword -e "flush privileges";
@@ -60,27 +77,17 @@ sudo chmod -R 755 /var/www/html/$FQDN/
 sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
-#cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
-#nano /var/www/html/$FQDN/config.php
+cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #And, replaced it with the following line: 
 
-echo "<?php" >> /var/www/html/$FQDN/config.php
-echo "unset($CFG);"  >> /var/www/html/$FQDN/config.php
-echo "global $CFG;"  >> /var/www/html/$FQDN/config.php
-echo "$CFG = new stdClass();" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dbtype    = '$dbtype';"  >> /var/www/html/$FQDN/config.php
-echo "$CFG->dblibrary = 'native';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dbhost    = '$dbhost';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dbname    = '$dbname';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dbuser    = '$dbuser';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dbpass    = '$dbpass';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->prefix    = 'mdl_';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => ','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);" >> /var/www/html/$FQDN/config.php
-echo "$CFG->wwwroot   = 'http://$FQDN';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->dataroot  = '/var/www/html/$FOLDERDATA';" >> /var/www/html/$FQDN/config.php
-echo "$CFG->directorypermissions = 02777;" >> /var/www/html/$FQDN/config.php
-echo "$CFG->admin = 'admin';" >> /var/www/html/$FQDN/config.php
-echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
+#set database details with perl find and replace
+sed -e "s/pgsql/$dbtype/" /var/www/html/$FQDN/config.php
+sed -e "s/localhost/$dbhost/g" /var/www/html/$FQDN/config.php
+sed -e "s/moodle/$dbname/g" /var/www/html/$FQDN/config.php
+sed -e "s/username/$dbuser/g" /var/www/html/$FQDN/config.php
+sed “"/password/$dbpass/g" /var/www/html/$FQDN/config.php
+sed -e "s/http://example.com/moodle/http://$FQDN/g" /var/www/html/$FQDN/config.php
+sed -e "s//home/example/moodledata//var/www/html/$FOLDERDATA/g" /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
@@ -215,3 +222,4 @@ sudo certbot --nginx -d $FQDN  -d $FQDN1 -d $FQDN2 -d $FQDN3
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
+fi
