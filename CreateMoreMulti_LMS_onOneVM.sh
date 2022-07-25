@@ -1,25 +1,17 @@
-clear
 cd ~
-############### Tham số cần thay đổi ở đây ###################
-FQDN="digital.cloud.edu.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
-FQDN1="lms.cloud.edu.vn"  # Đổi địa chỉ web thứ 2 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-FQDN2="demo.cloud.edu.vn"  # Đổi địa chỉ web thứ 3 để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-FQDN3="elearning.cloud.edu.vn"  # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
-dbname="digitaldata"   # Tên DBNane
-dbuser="digitaluser"   # Tên User access DB lmsatcuser
+
+FQDN="digital.cloud.edu.vn"    
+FQDN1="lms.cloud.edu.vn"   
+FQDN2="demo.cloud.edu.vn"   
+FQDN3="elearning.cloud.edu.vn"   
+dbname="digitaldata"    
+dbuser="digitaluser"    
 dbpass="P@$$w0rd-1.22"
-phpmyadmin="mysqladmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
-FOLDERDATA="digitaldata"   # Tên Thư mục chưa Data vs Cache
+phpmyadmin="mysqladmin"    
+FOLDERDATA="digitaldata"   
 dbtype="mariadb"
 dbhost="localhost"         
 GitMoodleversion="MOODLE_400_STABLE"
-
-echo "run install? (y/n)"
-read -e run
-if [ "$run" == n ] ; then
-  exit
-else
-
 
 ############### Các bước thông thường để cài đặt đã được bỏ qua #########
 #Step 1. Install NGINX
@@ -209,4 +201,3 @@ sudo certbot --nginx -d $FQDN  -d $FQDN1 -d $FQDN2 -d $FQDN3
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
-fi
