@@ -79,13 +79,12 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
 cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #And, replaced it with the following line: 
-
 #set database details with perl find and replace
 sed -e "s/pgsql/$dbtype/" /var/www/html/$FQDN/config.php
 sed -e "s/localhost/$dbhost/g" /var/www/html/$FQDN/config.php
 sed -e "s/moodle/$dbname/g" /var/www/html/$FQDN/config.php
 sed -e "s/username/$dbuser/g" /var/www/html/$FQDN/config.php
-sed “"/password/$dbpass/g" /var/www/html/$FQDN/config.php
+sed -e "s/password/$dbpass/g" /var/www/html/$FQDN/config.php
 sed -e "s/http://example.com/moodle/http://$FQDN/g" /var/www/html/$FQDN/config.php
 sed -e "s//home/example/moodledata//var/www/html/$FOLDERDATA/g" /var/www/html/$FQDN/config.php
 
