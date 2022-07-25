@@ -1,7 +1,7 @@
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
-echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
 read -e FQDN
 
 echo "dbname: e.g: demodata"   # Tên DBNane
@@ -79,8 +79,6 @@ sed -e "s/$CFG->dbuser *;/$dbuser/" /var/www/html/$FQDN/config.php
 sed -e "s/$CFG->dbpass *;/$dbpass/" /var/www/html/$FQDN/config.php
 sed -e "s/$CFG->wwwroot *;/http://$FQDN/" /var/www/html/$FQDN/config.php
 sed -e "s/$CFG->dataroot *;/var/www/html/$FOLDERDATA/" /var/www/html/$FQDN/config.php
-
-
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
