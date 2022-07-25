@@ -9,20 +9,19 @@ echo "FQDN2: e.g: mooc.company.vn"  # Đổi địa chỉ web thứ 3 để có 
 read -e FQDN2
 echo "FQDN3: e.g: elearning.company"  # Đổi địa chỉ web thứ 4 khác hẳn domain name để có chữ ký số SSL/TLS dùng chung Source code duy nhất
 read -e FQDN3
-
 echo "dbname: e.g: demodata"   # Tên DBNane
 read -e dbname
 echo "dbuser: e.g: userdata"   # Tên User access DB lmsatcuser
 read -e dbuser
-
 echo "Database Password: e.g: P@$$w0rd-1.22"
 read -s dbpass
+echo "phpmyadmin folder name: e.g: phpmyadmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
+read -e phpmyadmin
+echo "Moodle Folder Data: e.g: moodledata"   # Tên Thư mục chưa Data vs Cache
+read -e FOLDERDATA
 
 dbtype="mariadb"
 dbhost="localhost"         
-phpmyadmin="adminmysql"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
-
-FOLDERDATA="lmsatcdata"
 GitMoodleversion="MOODLE_400_STABLE"
 
 echo "run install? (y/n)"
@@ -78,15 +77,15 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
 cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
-#And, replaced it with the following line: 
 #set database details with perl find and replace
-sed -e "s/pgsql/$dbtype/" /var/www/html/$FQDN/config.php
-sed -e "s/localhost/$dbhost/g" /var/www/html/$FQDN/config.php
-sed -e "s/moodle/$dbname/g" /var/www/html/$FQDN/config.php
-sed -e "s/username/$dbuser/g" /var/www/html/$FQDN/config.php
-sed -e "s/password/$dbpass/g" /var/www/html/$FQDN/config.php
-sed -e "s/http://example.com/moodle/http://$FQDN/g" /var/www/html/$FQDN/config.php
-sed -e "s//home/example/moodledata//var/www/html/$FOLDERDATA/g" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbtype *;/$dbtype/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbhost *;/$dbhost/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbname *;/$dbname/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbuser *;/$dbuser/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbpass *;/$dbpass/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->wwwroot *;/http://$FQDN/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dataroot *;/var/www/html/$FOLDERDATA/" /var/www/html/$FQDN/config.php
+
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
