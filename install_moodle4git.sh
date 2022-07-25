@@ -1,9 +1,28 @@
 clear
 cd ~
+############### Tham số cần thay đổi ở đây ###################
+echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+read -e FQDN
+echo "dbname: e.g: demodata"   # Tên DBNane
+read -e dbname
+echo "dbuser: e.g: userdata"   # Tên User access DB lmsatcuser
+read -e dbuser
+echo "Database Password: e.g: P@$$w0rd-1.22"
+read -s dbpass
+echo "phpmyadmin folder name: e.g: phpmyadmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
+read -e phpmyadmin
+echo "Moodle Folder Data: e.g: moodledata"   # Tên Thư mục chưa Data vs Cache
+read -e FOLDERDATA
 
-FQDN="mooc.cloud.edu.vn"
-FOLDERDATA="moocdata"
+dbtype="mariadb"
+dbhost="localhost"         
 GitMoodleversion="MOODLE_400_STABLE"
+
+echo "run install? (y/n)"
+read -e run
+if [ "$run" == n ] ; then
+  exit
+else
 
 #Step 1. Install NGINX
 sudo apt-get update
@@ -44,34 +63,31 @@ sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-s
 #Open PHP-FPM config file.
 
 #sudo nano /etc/php/8.0/fpm/php.ini
-cat > /etc/php/8.0/fpm/php.ini <<END
 #Add/Update the values as shown. You may change it as per your requirement.
+cat > /etc/php/8.0/fpm/php.ini <<END
 file_uploads = On 
 allow_url_fopen = On 
-memory_limit = 512M 
-upload_max_filesize = 4096M 
+memory_limit = 1200M 
+upload_max_filesize = 4096M
 max_execution_time = 360 
 cgi.fix_pathinfo = 0 
 date.timezone = asia/ho_chi_minh
 max_input_time = 60
 max_input_nesting_level = 64
 max_input_vars = 5000
+post_max_size = 4096M
 END
- 
-systemctl restart php8.0-fpm
+systemctl restart php8.0-fpm.service
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
-sudo mysql -u root -p
-create database moocdatabase;
-create user moocuser@localhost identified by 'P@$$w0rd';
-grant all privileges on moocdatabase.* to moocuser@localhost;
-#Flush privileges to apply changes.
-flush privileges;
-SHOW DATABASES;
-#exit;
+#!/bin/bash
 
-#sudo mysql -u root -p
+mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
+mysql -uroot -prootpassword -e "flush privileges";
+mysql -uroot -prootpassword -e "SHOW DATABASES";
 
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
@@ -116,17 +132,14 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
 cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
-#nano /var/www/html/$FQDN/config.php
-#And, replaced it with the following line: 
-
-echo '$CFG->dbtype    = "mariadb";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dblibrary = "native";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost = "localhost";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname = "moocdatabase";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser = "moocuser";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass = "P@$$w0rd";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot ="http://'$FQDN'";' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot ="/var/www/html/'$FOLDERDATA'";' >> /var/www/html/$FQDN/config.php
+#set database details with perl find and replace
+sed -e "s/$CFG->dbtype *;/$dbtype/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbhost *;/$dbhost/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbname *;/$dbname/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbuser *;/$dbuser/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dbpass *;/$dbpass/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->wwwroot *;/http://$FQDN/" /var/www/html/$FQDN/config.php
+sed -e "s/$CFG->dataroot *;/var/www/html/$FOLDERDATA/" /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 
@@ -175,7 +188,7 @@ whereis apache2
 apache2: /etc/apache2
 sudo rm -rf /etc/apache2
 
-sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/phpmyadmin
+sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/$phpmyadmin
 sudo chown -R root:root /var/lib/phpmyadmin
 sudo nginx -t
 
@@ -207,4 +220,4 @@ sudo certbot --nginx -d $FQDN
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
-
+fi
