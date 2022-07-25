@@ -1,6 +1,7 @@
 # File name: update_moodle.sh
-# Tham số:
-folder_webmoodle="mooc.cloud.edu.vn"
+############### Tham số cần thay đổi ở đây ###################
+echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+read -e folder_webmoodle
 
 # switch to moodle source directory
 cd /usr/share/nginx/html/$folder_webmoodle;
