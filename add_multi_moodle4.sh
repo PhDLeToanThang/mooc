@@ -133,3 +133,4 @@ sudo certbot --nginx -d $FQDN
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
+fi
