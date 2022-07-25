@@ -1,6 +1,6 @@
 # File name: update_moodle.sh
 ############### Tham số cần thay đổi ở đây ###################
-echo "FQDN: e.g: demo.cloud.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
 read -e folder_webmoodle
 
 # switch to moodle source directory
