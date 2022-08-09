@@ -9,12 +9,12 @@ from vmware.vapi.stdlib.client.factories import StubConfigurationFactory
 import com.vmware.esx.authentication_client as authentication_client
 import com.vmware.esx.authentication.trust_client as trust_client
 import getpass
-NEW_USER=input(“Enter the name of the new user: “)
-ROOT_PASSWORD=getpass.getpass(“Enter ‘root’ password: “)
-connector = get_connector(“http”, “json”, url=”http://localhost/api&#8221;)
+NEW_USER=input("Enter the name of the new user: ")
+ROOT_PASSWORD=getpass.getpass("Enter 'root' password: ")
+connector = get_connector("http", "json", url='http://localhost/api';)
 stubConfig = StubConfigurationFactory.new_std_configuration(connector)
 connector.set_security_context(
-create_user_password_security_context(“root”, ROOT_PASSWORD))
+create_user_password_security_context("root", ROOT_PASSWORD))
 token = ApiClient(authentication_client.StubFactory(stubConfig))
 jwt = token.Token.create()
 connector.set_security_context(
