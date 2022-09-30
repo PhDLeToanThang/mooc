@@ -146,7 +146,7 @@ sed -e "s/$CFG->dataroot *;/var/www/html/$FOLDERDATA/" /var/www/html/$FQDN/confi
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
 #$ nano /etc/nginx/conf.d/$FQDN.conf
 echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
-echo '    listen 80;' >> 
+echo '    listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    root /var/www/html/'$FQDN';'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    index  index.php index.html index.htm;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    server_name '$FQDN';'>> /etc/nginx/conf.d/$FQDN.conf
