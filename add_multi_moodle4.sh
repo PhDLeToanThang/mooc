@@ -1,23 +1,23 @@
-#!/bin/bash
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
-echo "FQDN"   # Đổi địa chỉ web thứ nhất (Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
 read -e FQDN
-
-echo "dbname"   # Tên DBNane
+echo "dbname: e.g: demodata"   # Tên DBNane
 read -e dbname
-echo "dbuser"   # Tên User access DB lmsatcuser
+echo "dbuser: e.g: userdata"   # Tên User access DB lmsatcuser
 read -e dbuser
-echo "dbpass"
+echo "Database Password: e.g: P@$$w0rd-1.22"
 read -s dbpass
-echo "phpmyadmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
+echo "phpmyadmin folder name: e.g: phpmyadmin"   # Đổi tên thư mục phpmyadmin khi add link symbol vào Website 
 read -e phpmyadmin
-echo "FOLDERDATA"   # Tên Thư mục chưa Data vs Cache
+echo "Moodle Folder Data: e.g: moodledata"   # Tên Thư mục chưa Data vs Cache
 read -e FOLDERDATA
-
-dbtype="mariadb"
-dbhost="localhost"         
+echo "dbtype name: e.g: mariadb"   # Tên kiểu Database
+read -e dbtype
+echo "dbhost name: e.g: localhost"   # Tên Db host connector
+read -e dbhost
+        
 GitMoodleversion="MOODLE_400_STABLE"
 
 echo "run install? (y/n)"
@@ -25,6 +25,7 @@ read -e run
 if [ "$run" == n ] ; then
   exit
 else
+
 
 ############### Các bước thông thường để cài đặt đã được bỏ qua #########
 #Step 1. Install NGINX
@@ -34,10 +35,13 @@ else
 #Step 3. Install PHP-FPM & Related modules
 
 #Step 4. Create Moodle Database
+#Log into MySQL and create database for Moodle.
+#!/bin/bash
+
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
-mysql -uroot -prootpassword -e "flush privileges";
+mysql -uroot -prootpassword -e "CREATE USER $dbuser@$dbhost IDENTIFIED BY $dbpass";
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$dbhost";
+mysql -uroot -prootpassword -e "FLUSH PRIVILEGES";
 mysql -uroot -prootpassword -e "SHOW DATABASES";
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
@@ -69,15 +73,25 @@ sudo chmod -R 755 /var/www/html/$FQDN/
 sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
-cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
+#cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #set database details with perl find and replace
-sed -e "s/$CFG->dbtype *;/$dbtype/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->dbhost *;/$dbhost/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->dbname *;/$dbname/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->dbuser *;/$dbuser/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->dbpass *;/$dbpass/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->wwwroot *;/http://$FQDN/" /var/www/html/$FQDN/config.php
-sed -e "s/$CFG->dataroot *;/var/www/html/$FOLDERDATA/" /var/www/html/$FQDN/config.php
+echo '<?php'  >> /var/www/html/$FQDN/config.php
+echo 'unset($CFG);' >> /var/www/html/$FQDN/config.php
+echo 'global $CFG;' >> /var/www/html/$FQDN/config.php
+echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbtype    = '$dbtype';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost    = '$dbhost';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname    = '$dbname';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser    = '$dbuser';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass    = '$dbpass';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dboptions = array('dbpersist' => false,'dbsocket'  => false,'dbport' => '','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);' >> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot   = 'https://$FQDN';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
+echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
+echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
@@ -112,7 +126,15 @@ nginx -t
 
 #8. Setup and Configure PhpMyAdmin
 
-#9. Cách gỡ apache:
+#9. gỡ bỏ apache:
+sudo service apache2 stop
+sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
+sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
+
+sudo apt-get autoremove
+whereis apache2
+apache2: /etc/apache2
+sudo rm -rf /etc/apache2
 
 #10. Nâng cấp PhpmyAdmin lên version 5.2:
 sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/$phpmyadmin
@@ -126,7 +148,7 @@ sudo certbot --nginx -d $FQDN
 #/etc/letsencrypt/live/$FQDN/fullchain.pem
 #   Your key file has been saved at:
 #   /etc/letsencrypt/live/$FQDN/privkey.pem
-#   Your cert will expire on 2022-10-20. To obtain a new or tweaked
+#   Your cert will expire on yyyy-mm-dd. To obtain a new or tweaked
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
