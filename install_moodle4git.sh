@@ -13,9 +13,11 @@ echo "phpmyadmin folder name: e.g: phpmyadmin"   # Đổi tên thư mục phpmya
 read -e phpmyadmin
 echo "Moodle Folder Data: e.g: moodledata"   # Tên Thư mục chưa Data vs Cache
 read -e FOLDERDATA
-
-dbtype="mariadb"
-dbhost="localhost"         
+echo "dbtype name: e.g: mariadb"   # Tên kiểu Database
+read -e dbtype
+echo "dbhost name: e.g: localhost"   # Tên Db host connector
+read -e dbhost
+        
 GitMoodleversion="MOODLE_400_STABLE"
 
 echo "run install? (y/n)"
@@ -84,11 +86,10 @@ systemctl restart php8.0-fpm.service
 #!/bin/bash
 
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-mysql -uroot -prootpassword -e "CREATE USER $dbuser@'dbhost' IDENTIFIED BY '$dbpass'";
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'dbhost'";
-mysql -uroot -prootpassword -e "flush privileges";
+mysql -uroot -prootpassword -e "CREATE USER $dbuser@$dbhost IDENTIFIED BY $dbpass";
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$dbhost";
+mysql -uroot -prootpassword -e "FLUSH PRIVILEGES";
 mysql -uroot -prootpassword -e "SHOW DATABASES";
-
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -177,8 +178,7 @@ nginx -t
 sudo apt update
 sudo apt install phpmyadmin
 
-
-#9. Cách gỡ apache:
+#9. gỡ bỏ apache:
 sudo service apache2 stop
 sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
 sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
@@ -204,6 +204,8 @@ ls
 #We want to move the contents of this folder to /usr/share/phpmyadmin
 sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
 ls /usr/share/phpmyadmin
+mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
+
 sudo systemctl restart nginx
 systemctl restart php8.0-fpm.service
 
@@ -216,7 +218,7 @@ sudo certbot --nginx -d $FQDN
 #/etc/letsencrypt/live/$FQDN/fullchain.pem
 #   Your key file has been saved at:
 #   /etc/letsencrypt/live/$FQDN/privkey.pem
-#   Your cert will expire on 2022-10-20. To obtain a new or tweaked
+#   Your cert will expire on yyyy-mm-dd. To obtain a new or tweaked
 #   version of this certificate in the future, simply run certbot again
 #   with the "certonly" option. To non-interactively renew *all* of
 #   your certificates, run "certbot renew"
