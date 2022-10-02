@@ -95,7 +95,7 @@ echo ");" >> /var/www/html/$FQDN/config.php
 echo '$CFG->wwwroot   = "'"https://$FQDN"'";' >> /var/www/html/$FQDN/config.php
 echo '$CFG->dataroot  = "'"/var/www/html/$FOLDERDATA"'";' >> /var/www/html/$FQDN/config.php
 echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
-echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->admin = "'"admin"'";' >> /var/www/html/$FQDN/config.php
 echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
