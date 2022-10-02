@@ -74,29 +74,29 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
 #cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #set database details with perl find and replace
-echo '<?php'  >> /var/www/html/$FQDN/config.php
+echo "<?php"  >> /var/www/html/$FQDN/config.php
 echo 'unset($CFG);' >> /var/www/html/$FQDN/config.php
 echo 'global $CFG;' >> /var/www/html/$FQDN/config.php
-echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbtype    = '$dbtype';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost    = '$dbhost';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname    = '$dbname';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser    = '$dbuser';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass    = '$dbpass';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
-echo "$CFG->dboptions = array(" >> /var/www/html/$FQDN/config.php
-echo "'dbpersist' => false,"  >> /var/www/html/$FQDN/config.php
-echo "'dbsocket'  => false,"  >> /var/www/html/$FQDN/config.php
+echo '$CFG= new stdClass();' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbtype    = "'"$dbtype"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dblibrary = "'"native"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost    = "'"$dbhost"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname    = "'"$dbname"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser    = "'"$dbuser"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass    = "'"$dbpass"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->prefix    = "'"mdl_"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dboptions = array(' >> /var/www/html/$FQDN/config.php
+echo "'dbpersist' => false," >> /var/www/html/$FQDN/config.php
+echo "'dbsocket'  => false," >> /var/www/html/$FQDN/config.php
 echo "'dbport' => '',"  >> /var/www/html/$FQDN/config.php
 echo "'dbhandlesoptions' => false,"  >> /var/www/html/$FQDN/config.php
 echo "'dbcollation' => 'utf8mb4_unicode_ci'," >> /var/www/html/$FQDN/config.php
 echo ");" >> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot   = 'https://$FQDN';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot   = "'"https://$FQDN"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot  = "'"/var/www/html/$FOLDERDATA"'";' >> /var/www/html/$FQDN/config.php
 echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
 echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
-echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
+echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
