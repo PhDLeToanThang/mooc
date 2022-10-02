@@ -84,12 +84,12 @@ systemctl restart php8.0-fpm.service
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
 #!/bin/bash
-
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-mysql -uroot -prootpassword -e "CREATE USER $dbuser@$dbhost IDENTIFIED BY $dbpass";
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@$dbhost";
+mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost'";
 mysql -uroot -prootpassword -e "FLUSH PRIVILEGES";
 mysql -uroot -prootpassword -e "SHOW DATABASES";
+
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -134,23 +134,29 @@ sudo chown www-data /var/www/html/$FOLDERDATA
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
 #cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #set database details with perl find and replace
-echo '<?php'  >> /var/www/html/$FQDN/config.php
+echo "<?php"  >> /var/www/html/$FQDN/config.php
 echo 'unset($CFG);' >> /var/www/html/$FQDN/config.php
 echo 'global $CFG;' >> /var/www/html/$FQDN/config.php
-echo '$CFG = new stdClass();' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbtype    = '$dbtype';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dblibrary = 'native';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbhost    = '$dbhost';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbname    = '$dbname';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbuser    = '$dbuser';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dbpass    = '$dbpass';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->prefix    = 'mdl_';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dboptions = array('dbpersist' => false,'dbsocket' => false,'dbport' => '','dbhandlesoptions' => false,'dbcollation' => 'utf8mb4_unicode_ci',);' >> /var/www/html/$FQDN/config.php
-echo '$CFG->wwwroot   = 'https://$FQDN';' >> /var/www/html/$FQDN/config.php
-echo '$CFG->dataroot  = '/var/www/html/$FOLDERDATA';' >> /var/www/html/$FQDN/config.php
+echo '$CFG= new stdClass();' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbtype    = "'"$dbtype"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dblibrary = "'"native"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbhost    = "'"$dbhost"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbname    = "'"$dbname"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbuser    = "'"$dbuser"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dbpass    = "'"$dbpass"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->prefix    = "'"mdl_"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dboptions = array(' >> /var/www/html/$FQDN/config.php
+echo "'dbpersist' => false," >> /var/www/html/$FQDN/config.php
+echo "'dbsocket'  => false," >> /var/www/html/$FQDN/config.php
+echo "'dbport' => '',"  >> /var/www/html/$FQDN/config.php
+echo "'dbhandlesoptions' => false,"  >> /var/www/html/$FQDN/config.php
+echo "'dbcollation' => 'utf8mb4_unicode_ci'," >> /var/www/html/$FQDN/config.php
+echo ");" >> /var/www/html/$FQDN/config.php
+echo '$CFG->wwwroot   = "'"https://$FQDN"'";' >> /var/www/html/$FQDN/config.php
+echo '$CFG->dataroot  = "'"/var/www/html/$FOLDERDATA"'";' >> /var/www/html/$FQDN/config.php
 echo '$CFG->directorypermissions = 02777;' >> /var/www/html/$FQDN/config.php
-echo '$CFG->admin = 'admin';' >> /var/www/html/$FQDN/config.php
-echo 'require_once(__DIR__ . '/lib/setup.php');' >> /var/www/html/$FQDN/config.php
+echo '$CFG->admin = "'"admin"'";' >> /var/www/html/$FQDN/config.php
+echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
 
