@@ -20,7 +20,7 @@ echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
         
 GitMoodleversion="MOODLE_400_STABLE"
-CFG ="$CFG"
+CFG ="\$CFG"
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
