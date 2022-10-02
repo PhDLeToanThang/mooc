@@ -20,7 +20,7 @@ echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
         
 GitMoodleversion="MOODLE_400_STABLE"
-cfg1 ="$" & "CFG"
+
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
@@ -33,25 +33,25 @@ mysql -uroot -prootpassword -e "SHOW DATABASES";
 
 # Set tạo file config-sample.php 
 echo "<?php"  >> /var/www/html/$FQDN/config1.php
-echo "unset($cfg1);" >> /var/www/html/$FQDN/config1.php
-echo "global $cfg1;" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1 = new stdClass();" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dbtype    = '$dbtype';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dblibrary = 'native';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dbhost    = '$dbhost';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dbname    = '$dbname';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dbuser    = '$dbuser';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dbpass    = '$dbpass';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->prefix    = 'mdl_';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dboptions = array(" >> /var/www/html/$FQDN/config1.php
+echo "unset($CFG);" >> /var/www/html/$FQDN/config1.php
+echo "global $CFG;" >> /var/www/html/$FQDN/config1.php
+echo "$CFG= new stdClass();" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dbtype    = '$dbtype';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dblibrary = 'native';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dbhost    = '$dbhost';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dbname    = '$dbname';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dbuser    = '$dbuser';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dbpass    = '$dbpass';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->prefix    = 'mdl_';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dboptions = array(" >> /var/www/html/$FQDN/config1.php
 echo "'dbpersist' => false,"  >> /var/www/html/$FQDN/config1.php
 echo "'dbsocket'  => false,"  >> /var/www/html/$FQDN/config1.php
 echo "'dbport' => '',"  >> /var/www/html/$FQDN/config1.php
 echo "'dbhandlesoptions' => false,"  >> /var/www/html/$FQDN/config1.php
 echo "'dbcollation' => 'utf8mb4_unicode_ci'," >> /var/www/html/$FQDN/config1.php
 echo ");" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->wwwroot   = 'https://$FQDN';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->dataroot  = '/var/www/html/$FOLDERDATA';" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->directorypermissions = 02777;" >> /var/www/html/$FQDN/config1.php
-echo "$cfg1->admin = 'admin';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->wwwroot   = 'https://$FQDN';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->dataroot  = '/var/www/html/$FOLDERDATA';" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->directorypermissions = 02777;" >> /var/www/html/$FQDN/config1.php
+echo "$CFG->admin = 'admin';" >> /var/www/html/$FQDN/config1.php
 echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config1.php
