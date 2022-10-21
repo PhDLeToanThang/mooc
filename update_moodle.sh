@@ -4,7 +4,7 @@ echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất (Webs
 read -e folder_webmoodle
 
 # switch to moodle source directory
-cd /var/www/nginx/html/$folder_webmoodle;
+cd /var/www/html/$folder_webmoodle;
 
 # put moodle into maintenance mode
 sudo -u www-data php /var/www/html/$folder_webmoodle/admin/cli/maintenance.php --enable;
