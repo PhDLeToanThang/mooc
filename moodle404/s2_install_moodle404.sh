@@ -18,7 +18,7 @@ read -e dbtype
 echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
         
-GitMoodleversion="MOODLE_400_STABLE"
+GitMoodleversion="MOODLE_404_STABLE"
 
 echo "run install? (y/n)"
 read -e run
