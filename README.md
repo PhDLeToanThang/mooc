@@ -1,10 +1,14 @@
 # mooc
- MOOC version 4 by moodle v4.x
+
+**MOOC version 4 by moodle v4.0.4 Standable:**
+
+- Fixed Ubuntu 24.04 LTS: wget https://raw.githubusercontent.com/PhDLeToanThang/mooc/master/moodle404/s1_fix_linux.sh
+
+- Install Moodle 4.0.4: wget https://raw.githubusercontent.com/PhDLeToanThang/mooc/master/moodle404/s2_install_moodle404.sh 
 
 1. Cài mới một trang Moodle git v4.x lần đầu tiên dựng moodle trên linux:
 - Dùng lệnh chạy Terminal trên Ubuntu 20.04: 
 wget https://raw.githubusercontent.com/PhDLeToanThang/mooc/master/install_moodle4git.sh && sudo bash install_moodle4git.sh
-
 
 2. Cài bổ sung, thêm từng trang moodle v4.x kiểu Multi-tenant trên cùng cụm linux:
 - Dùng lệnh chạy Terminal trên Ubuntu 20.04: 
