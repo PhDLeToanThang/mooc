@@ -5,6 +5,8 @@
 # mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
 ########################
+#!/bin/bash -e
+
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
@@ -105,7 +107,6 @@ systemctl restart php8.3-fpm.service
 # install tool mysql-workbench-community from Tonin Bolzan (tonybolzan)
 sudo snap install mysql-workbench-community
 
-#!/bin/bash
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 mysql -uroot -prootpassword -e "CREATE USER `$dbuser`@`$dbhost` IDENTIFIED BY `$dbpass`;";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON `$dbname`.* TO `$dbuser`@`$dbhost`;";
