@@ -257,6 +257,6 @@ sudo certbot --nginx -n -d $FQDN --email $emailcertbot --agree-tos --redirect --
 #   /etc/letsencrypt/live/$FQDN/privkey.pem
 #   Your cert will expire on yyyy-mm-dd. To obtain a new or tweaked
 #   version of this certificate in the future, simply run certbot again
-#   with the "certonly" option. To non-interactively renew *all* of
-#   your certificates, run "certbot renew"
+#   with the certonly option. To non-interactively renew *all* of
+#   your certificates, run certbot renew
 fi
