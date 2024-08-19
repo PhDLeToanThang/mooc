@@ -28,7 +28,6 @@ echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
 echo "Your Email address fro Certbot e.g: thang@company.vn" # Địa chỉ email của bạn để quản lý CA
 read -e emailcertbot
-        
 GitMoodleversion="MOODLE_404_STABLE"
 
 echo "run install? (y/n)"
@@ -40,8 +39,8 @@ else
 #Step 1. Install NGINX
 sudo apt-get update -y
 sudo apt-get install nginx -y
-sudo systemctl stop nginx.service 
-sudo systemctl start nginx.service 
+sudo systemctl stop nginx.service
+sudo systemctl start nginx.service
 sudo systemctl enable nginx.service
 
 #Step 2. Install MariaDB/MySQL
@@ -87,12 +86,12 @@ sudo apt install php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-s
 #sudo nano /etc/php/8.3/fpm/php.ini
 #Add/Update the values as shown. You may change it as per your requirement.
 cat > /etc/php/8.3/fpm/php.ini <<END
-file_uploads = On 
-allow_url_fopen = On 
-memory_limit = 1200M 
+file_uploads = On
+allow_url_fopen = On
+memory_limit = 1200M
 upload_max_filesize = 4096M
-max_execution_time = 360 
-cgi.fix_pathinfo = 0 
+max_execution_time = 360
+cgi.fix_pathinfo = 0
 date.timezone = asia/ho_chi_minh
 max_input_time = 60
 max_input_nesting_level = 64
@@ -132,25 +131,25 @@ sudo apt install git -y
 
 cd /opt
 #Run the following command to download Moodle package.
-#Download the Moodle Code and Index 
+#Download the Moodle Code and Index
 sudo git clone git://git.moodle.org/moodle.git
-#Change directory into the downloaded Moodle folder 
+#Change directory into the downloaded Moodle folder
 cd moodle
-#Retrieve a list of each branch available 
+#Retrieve a list of each branch available
 #sudo git branch -a
-#Tell git which branch to track or use 
+#Tell git which branch to track or use
 #sudo git branch --track $GitMoodleversion origin/$GitMoodleversion
 
 #if get error
 git fetch
-#Finally, Check out the Moodle version specified 
+#Finally, Check out the Moodle version specified
 sudo git checkout $GitMoodleversion
 #Run the following command to extract package to NGINX website root folder.
 sudo cp -R /opt/moodle /var/www/html/$FQDN
 sudo mkdir /var/www/html/$FOLDERDATA
 #Change the folder permissions.
-sudo chown -R www-data:www-data /var/www/html/$FQDN/ 
-sudo chmod -R 755 /var/www/html/$FQDN/ 
+sudo chown -R www-data:www-data /var/www/html/$FQDN/
+sudo chmod -R 755 /var/www/html/$FQDN/
 sudo chown www-data /var/www/html/$FOLDERDATA
 
 #Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
@@ -242,7 +241,7 @@ ls
 #We want to move the contents of this folder to /usr/share/phpmyadmin
 sudo mv phpMyAdmin-5.2.1-all-languages/* /usr/share/phpmyadmin
 ls /usr/share/phpmyadmin
-mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
+mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin
 
 sudo systemctl restart nginx
 systemctl restart php8.3-fpm.service
