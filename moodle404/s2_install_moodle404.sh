@@ -47,8 +47,8 @@ sudo systemctl enable mysql.service
 #Run the following command to secure MariaDB installation.
 sudo mysql_secure_installation  <<EOF
 y
-@T.c0m@2024
-@T.c0m@2024
+secret
+secret
 y
 n
 y
