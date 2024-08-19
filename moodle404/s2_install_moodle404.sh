@@ -111,7 +111,6 @@ mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON `$dbname`.* TO `$dbuser`
 mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;";
 mysql -uroot -prootpassword -e "SHOW DATABASES;";
 
-
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
 #Add the following lines inside the [mysqld] section: 
