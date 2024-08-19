@@ -54,9 +54,9 @@ sudo systemctl enable mysql.service
 #password mysql mariadb , i'm fixed: M@tKh@uS3cr3t  --> you must changit. 
 
 sudo mysql_secure_installation  <<EOF
-y
-@T.c0m@2024
-@T.c0m@2024
+n
+M@tKh@uS3cr3t
+M@tKh@uS3cr3t
 y
 n
 y
