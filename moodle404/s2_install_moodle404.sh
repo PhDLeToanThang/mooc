@@ -1,5 +1,5 @@
 ########################
-# Moodle 4.0.4 "Moodle v44"
+# Moodle 4.0.4 = Moodle v4.4
 # PHP 8.3
 # NGINX 1.24, phpmyadmin 5.2.1
 # mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
