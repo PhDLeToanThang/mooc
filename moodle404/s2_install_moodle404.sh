@@ -45,8 +45,15 @@ sudo systemctl start mysql.service
 sudo systemctl enable mysql.service
 
 #Run the following command to secure MariaDB installation.
-sudo mysql_secure_installation
-
+sudo mysql_secure_installation  <<EOF
+y
+@T.c0m@2024
+@T.c0m@2024
+y
+n
+y
+y
+EOF
 #You will see the following prompts asking to allow/disallow different type of logins. Enter Y as shown.
 # Enter current password for root (enter for none): Just press the Enter
 # Set root password? [Y/n]: Y
