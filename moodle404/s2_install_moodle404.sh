@@ -5,7 +5,7 @@
 # mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
 ########################
-#!/bin/bash -e
+## !/bin/bash -e
 
 clear
 cd ~
