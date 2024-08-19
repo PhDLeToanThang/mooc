@@ -60,7 +60,7 @@ sudo mysql_secure_installation
 
 #Step 3. Install PHP-FPM & Related modules
 sudo apt-get install software-properties-common -y
-sudo add-apt-repository ppa:ondrej/php
+sudo -S add-apt-repository ppa:ondrej/php -y
 sudo apt update -y
 sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-mcrypt php8.0-ldap php8.0-zip php8.0-curl -y
 
@@ -86,11 +86,11 @@ systemctl restart php8.0-fpm.service
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
 #!/bin/bash
-mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost'";
-mysql -uroot -prootpassword -e "FLUSH PRIVILEGES";
-mysql -uroot -prootpassword -e "SHOW DATABASES";
+mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+mysql -uroot -prootpassword -e "CREATE USER `$dbuser`@`$dbhost` IDENTIFIED BY `$dbpass`;";
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON `$dbname`.* TO `$dbuser`@`$dbhost`;";
+mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;";
+mysql -uroot -prootpassword -e "SHOW DATABASES;";
 
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
@@ -229,7 +229,7 @@ systemctl restart php8.0-fpm.service
 
 #11. Install Certbot
 sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d $FQDN -e $emailcertbot
+sudo certbot --nginx -d $FQDN --email $emailcertbot
 
 # You should test your configuration at:
 # https://www.ssllabs.com/ssltest/analyze.html?d=$FQDN
