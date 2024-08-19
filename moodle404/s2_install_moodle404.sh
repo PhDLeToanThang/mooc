@@ -5,7 +5,6 @@
 # mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
 ########################
-## !/bin/bash -e
 
 clear
 cd ~
@@ -106,11 +105,12 @@ systemctl restart php8.3-fpm.service
 # install tool mysql-workbench-community from Tonin Bolzan (tonybolzan)
 sudo snap install mysql-workbench-community
 
-mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-mysql -uroot -prootpassword -e "CREATE USER `$dbuser`@`$dbhost` IDENTIFIED BY `$dbpass`;";
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON `$dbname`.* TO `$dbuser`@`$dbhost`;";
-mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;";
-mysql -uroot -prootpassword -e "SHOW DATABASES;";
+#!/bin/bash
+mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass';"
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost';"
+mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;"
+mysql -uroot -prootpassword -e "SHOW DATABASES;"
 
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
