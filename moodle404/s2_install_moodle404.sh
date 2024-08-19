@@ -1,3 +1,4 @@
+#!/bin/bash
 ########################
 # Moodle 4.0.4 = Moodle v4.4
 # PHP 8.3
@@ -6,8 +7,6 @@
 # OS ubuntu 24.04 LTS 
 ########################
 
-clear
-cd ~
 ############### Tham số cần thay đổi ở đây ###################
 echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
 read -e FQDN
@@ -105,10 +104,10 @@ systemctl restart php8.3-fpm.service
 # install tool mysql-workbench-community from Tonin Bolzan (tonybolzan)
 sudo snap install mysql-workbench-community
 
-#!/bin/bash
-mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass';"
-mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost';"
+mysql -uroot -prootpassword -e "DROP DATABASE IF EXISTS ${dbname};"
+mysql -uroot -prootpassword -e "CREATE DATABASE IF NOT EXISTS ${dbname} CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+mysql -uroot -prootpassword -e "CREATE USER IF NOT EXISTS '${dbuser}'@'${dbhost}' IDENTIFIED BY \"${dbpass}\";"
+mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbuser}'@'${dbhost}';"
 mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;"
 mysql -uroot -prootpassword -e "SHOW DATABASES;"
 
