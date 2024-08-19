@@ -56,8 +56,8 @@ sudo systemctl enable mysql.service
 
 sudo mysql_secure_installation  <<EOF
 y
-M@tKh@uS3cr3t
-M@tKh@uS3cr3t
+@T.c0m@2024
+@T.c0m@2024
 y
 n
 y
@@ -102,6 +102,9 @@ systemctl restart php8.3-fpm.service
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
 #!/bin/bash
+# install tool mysql-workbench-community from Tonin Bolzan (tonybolzan)
+sudo snap install mysql-workbench-community -y
+
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 mysql -uroot -prootpassword -e "CREATE USER `$dbuser`@`$dbhost` IDENTIFIED BY `$dbpass`;";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON `$dbname`.* TO `$dbuser`@`$dbhost`;";
