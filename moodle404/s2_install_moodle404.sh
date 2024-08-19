@@ -17,6 +17,8 @@ echo "dbtype name: e.g: mariadb"   # Tên kiểu Database
 read -e dbtype
 echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
+echo "Your Email address fro Certbot e.g: thang@company.vn" # Địa chỉ email của bạn để quản lý CA
+read -e emailcertbot
         
 GitMoodleversion="MOODLE_404_STABLE"
 
@@ -27,15 +29,15 @@ if [ "$run" == n ] ; then
 else
 
 #Step 1. Install NGINX
-sudo apt-get update
-sudo apt-get install nginx
+sudo apt-get update -y
+sudo apt-get install nginx -y
 sudo systemctl stop nginx.service 
 sudo systemctl start nginx.service 
 sudo systemctl enable nginx.service
 
 #Step 2. Install MariaDB/MySQL
 #Run the following commands to install MariaDB database for Moode. You may also use MySQL instead.
-sudo apt-get install mariadb-server mariadb-client
+sudo apt-get install mariadb-server mariadb-client -y
 
 #Like NGINX, we will run the following commands to enable MariaDB to autostart during reboot, and also start now.
 sudo systemctl stop mysql.service 
@@ -57,10 +59,10 @@ sudo mysql_secure_installation
 # After you enter response for these questions, your MariaDB installation will be secured.
 
 #Step 3. Install PHP-FPM & Related modules
-sudo apt-get install software-properties-common
+sudo apt-get install software-properties-common -y
 sudo add-apt-repository ppa:ondrej/php
-sudo apt update
-sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-mcrypt php8.0-ldap php8.0-zip php8.0-curl 
+sudo apt update -y
+sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-mcrypt php8.0-ldap php8.0-zip php8.0-curl -y
 
 #Open PHP-FPM config file.
 
@@ -106,7 +108,7 @@ systemctl restart mariadb
 
 #Step 6. Download & Install Moodle
 #We will be using Git to install/update the Moodle Core Application 
-sudo apt install git
+sudo apt install git -y
 
 cd /opt
 #Run the following command to download Moodle package.
@@ -191,8 +193,8 @@ echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 nginx -t
 
 #8. Setup and Configure PhpMyAdmin
-sudo apt update
-sudo apt install phpmyadmin
+sudo apt update -y
+sudo apt install phpmyadmin -y
 
 #9. gỡ bỏ apache:
 sudo service apache2 stop
@@ -226,8 +228,8 @@ sudo systemctl restart nginx
 systemctl restart php8.0-fpm.service
 
 #11. Install Certbot
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d $FQDN
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d $FQDN -e $emailcertbot
 
 # You should test your configuration at:
 # https://www.ssllabs.com/ssltest/analyze.html?d=$FQDN
