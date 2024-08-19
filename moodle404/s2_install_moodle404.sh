@@ -1,7 +1,7 @@
 ########################
 # Moodle 4.0.4 "Moodle v44"
 # PHP 8.3
-# NGINX 1.24, phpmyadmin 5.2.0
+# NGINX 1.24, phpmyadmin 5.2.1
 # mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
 ########################
@@ -82,7 +82,7 @@ sudo apt install php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-s
 
 #Open PHP-FPM config file.
 
-#sudo nano /etc/php/8.0/fpm/php.ini
+#sudo nano /etc/php/8.3/fpm/php.ini
 #Add/Update the values as shown. You may change it as per your requirement.
 cat > /etc/php/8.3/fpm/php.ini <<END
 file_uploads = On 
@@ -226,17 +226,17 @@ sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/$phpmyadmin
 sudo chown -R root:root /var/lib/phpmyadmin
 sudo nginx -t
 
-#10. Nâng cấp PhpmyAdmin lên version 5.2:
+#10. Nâng cấp PhpmyAdmin lên version 5.2.1:
 sudo mv /usr/share/phpmyadmin/ /usr/share/phpmyadmin.bak
 sudo mkdir /usr/share/phpmyadmin/
 cd /usr/share/phpmyadmin/
-sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
-sudo tar xzf phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz
+sudo tar xzf phpMyAdmin-5.2.1-all-languages.tar.gz
 #Once extracted, list folder.
 ls
-#You should see a new folder phpMyAdmin-5.2.0-all-languages
+#You should see a new folder phpMyAdmin-5.2.1-all-languages
 #We want to move the contents of this folder to /usr/share/phpmyadmin
-sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
+sudo mv phpMyAdmin-5.2.1-all-languages/* /usr/share/phpmyadmin
 ls /usr/share/phpmyadmin
 mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
 
