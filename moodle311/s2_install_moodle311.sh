@@ -1,9 +1,9 @@
 #!/bin/bash
 ########################
-# Moodle 4.0.4 = Moodle v4.4
+# Moodle 3.11 = Moodle v3.11
 # PHP 8.3
 # NGINX 1.24, phpmyadmin 5.2.1
-# mysql 10.11.8-mariaDB-0ubuntu0.24.04.1
+# mysql 5.7 vs 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
 ########################
 
@@ -26,7 +26,8 @@ echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
 echo "Your Email address fro Certbot e.g: thang@company.vn" # Địa chỉ email của bạn để quản lý CA
 read -e emailcertbot
-GitMoodleversion="MOODLE_404_STABLE"
+GitMoodleversion="MOODLE_311_STABLE"
+# ref downlaod: https://git.moodle.org/gw?p=moodle.git;a=summary 
 
 echo "run install? (y/n)"
 read -e run
