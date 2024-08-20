@@ -1,7 +1,7 @@
 #!/bin/bash
 ########################
 # Moodle 3.11 = Moodle v3.11
-# PHP 8.3
+# PHP 8.0
 # NGINX 1.24, phpmyadmin 5.2.1
 # mysql 5.7 vs 10.11.8-mariaDB-0ubuntu0.24.04.1
 # OS ubuntu 24.04 LTS 
@@ -78,13 +78,13 @@ EOF
 sudo apt-get install software-properties-common -y
 sudo -S add-apt-repository ppa:ondrej/php -y
 sudo apt update -y
-sudo apt install php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-soap php8.3-gd php8.3-xml php8.3-intl php8.3-mysql php8.3-cli php8.3-mcrypt php8.3-ldap php8.3-zip php8.3-curl -y
+sudo apt install php8.0-fpm php8.0-common php8.0-mbstring php8.0-xmlrpc php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-mcrypt php8.0-ldap php8.0-zip php8.0-curl -y
 
 #Open PHP-FPM config file.
 
-#sudo nano /etc/php/8.3/fpm/php.ini
+#sudo nano /etc/php/8.0/fpm/php.ini
 #Add/Update the values as shown. You may change it as per your requirement.
-cat > /etc/php/8.3/fpm/php.ini <<END
+cat > /etc/php/8.0/fpm/php.ini <<END
 file_uploads = On
 allow_url_fopen = On
 memory_limit = 1200M
@@ -97,7 +97,7 @@ max_input_nesting_level = 64
 max_input_vars = 5000
 post_max_size = 4096M
 END
-systemctl restart php8.3-fpm.service
+systemctl restart php8.0-fpm.service
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
@@ -199,7 +199,7 @@ echo '      alias /var/www/html/'$FOLDERDATA'/;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    location ~ [^/].php(/|$) {'>> /etc/nginx/conf.d/$FQDN.conf
 echo '        include snippets/fastcgi-php.conf;'>> /etc/nginx/conf.d/$FQDN.conf
-echo '        fastcgi_pass unix:/run/php/php8.3-fpm.sock;'>> /etc/nginx/conf.d/$FQDN.conf
+echo '        fastcgi_pass unix:/run/php/php8.0-fpm.sock;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '        include fastcgi_params;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
@@ -244,7 +244,7 @@ ls /usr/share/phpmyadmin
 mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin
 
 sudo systemctl restart nginx
-systemctl restart php8.3-fpm.service
+systemctl restart php8.0-fpm.service
 
 #11. Install Certbot
 sudo apt install certbot python3-certbot-nginx -y
