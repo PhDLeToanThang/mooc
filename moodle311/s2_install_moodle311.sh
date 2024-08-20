@@ -152,7 +152,7 @@ sudo chown -R www-data:www-data /var/www/html/$FQDN/
 sudo chmod -R 755 /var/www/html/$FQDN/
 sudo chown www-data /var/www/html/$FOLDERDATA
 
-#Once the download is completed, edit the Mooc.cloud.edu.vn config.php and define the database type: 
+#Once the download is completed, edit the moodle config.php and define the database type: 
 #cp /var/www/html/$FQDN/config-dist.php /var/www/html/$FQDN/config.php
 #set database details with perl find and replace
 echo "<?php"  >> /var/www/html/$FQDN/config.php
