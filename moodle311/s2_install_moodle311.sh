@@ -1,6 +1,6 @@
 #!/bin/bash
 ########################
-# Moodle 3.11 = Moodle v3.11
+# Moodle 3.11.18 (Build: 20231211)
 # PHP 8.0
 # NGINX 1.24, phpmyadmin 5.2.1
 # mysql 5.7 vs 10.11.8-mariaDB-0ubuntu0.24.04.1
