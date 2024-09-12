@@ -36,6 +36,8 @@ sudo systemctl enable xrdp # start xrdp on system start
 sudo apt install wget -y
 sudo apt install ufw -y
 sudo apt install net-tools -y
+sudo apt install install qemu-guest-agent -y
+sudo apt install gedit -y
 sudo apt install gparted -y
 sudo apt install ifupdown -y
 
