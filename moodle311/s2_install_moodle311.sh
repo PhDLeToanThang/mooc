@@ -120,6 +120,7 @@ cat > /etc/mysql/mariadb.conf.d/50-server.cnf <<END
 innodb_file_format = Barracuda
 innodb_file_per_table = 1
 innodb_large_prefix = ON
+max_allowed_packet=128M
 END
 
 #Save the file then restart the MariaDB service to apply the changes.
@@ -180,7 +181,9 @@ echo '$CFG->admin = "'"admin"'";' >> /var/www/html/$FQDN/config.php
 echo "require_once(__DIR__ . '/lib/setup.php');" >> /var/www/html/$FQDN/config.php
 
 #Step 7. Configure NGINX
-
+#Them dong lenh xoa noi dung cau hinh trong file conf truoc khi dien thong tin chuan moi:
+cat > /etc/nginx/conf.d/${FQDN}.conf <<END
+END
 #Next, you will need to create an Nginx virtual host configuration file to host Moodle:
 #$ nano /etc/nginx/conf.d/$FQDN.conf
 echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
