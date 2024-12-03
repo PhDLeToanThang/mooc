@@ -84,19 +84,229 @@ sudo apt install php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-s
 #sudo nano /etc/php/8.3/fpm/php.ini
 #Add/Update the values as shown. You may change it as per your requirement.
 cat > /etc/php/8.3/fpm/php.ini <<END
-file_uploads = On
-allow_url_fopen = On
-memory_limit = 1200M
+[PHP]
+engine = On
+short_open_tag = Off
+precision = 14
+output_buffering = 4096
+zlib.output_compression = Off
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = -1
+disable_functions = 
+disable_classes =
+zend.enable_gc = On
+zend.exception_ignore_args = On
+zend.exception_string_param_max_len = 0
+expose_php = Off
+file_uploads = On 
+allow_url_fopen = On 
+memory_limit = 1200M 
 upload_max_filesize = 4096M
-max_execution_time = 360
-cgi.fix_pathinfo = 0
-date.timezone = asia/ho_chi_minh
+max_execution_time = 360 
+cgi.fix_pathinfo = 0 
 max_input_time = 60
 max_input_nesting_level = 64
 max_input_vars = 5000
 post_max_size = 4096M
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+variables_order = "GPCS"
+request_order = "GP"
+register_argc_argv = Off
+auto_globals_jit = On
+auto_prepend_file =
+auto_append_file =
+default_mimetype = "text/html"
+default_charset = "UTF-8"
+doc_root =
+user_dir =
+enable_dl = Off
+allow_url_fopen = On
+allow_url_include = Off
+default_socket_timeout = 60
+extension=bz2
+extension=curl
+;extension=ffi
+;extension=ftp
+extension=fileinfo
+;extension=gd
+;extension=gettext
+;extension=gmp
+extension=intl
+;extension=imap
+extension=php_ldap.so
+extension=mbstring
+;extension=exif      ; Must be after mbstring as it depends on it
+;extension=mysqli
+;extension=oci8_12c  ; Use with Oracle Database 12c Instant Client
+;extension=oci8_19  ; Use with Oracle Database 19 Instant Client
+;extension=odbc
+extension=openssl
+;extension=pdo_firebird
+;extension=pdo_mysql
+;extension=pdo_oci
+;extension=pdo_odbc
+;extension=pdo_pgsql
+;extension=pdo_sqlite
+;extension=pgsql
+;extension=shmop
+;extension=snmp
+;extension=soap
+;extension=sockets
+;extension=sodium
+;extension=sqlite3
+;extension=tidy
+;extension=xsl
+;zend_extension=opcache
+[CLI Server]
+cli_server.color = On
+
+[Date]
+date.timezone=Asia/Ho_Chi_Minh
+
+; https://php.net/date.default-latitude
+;date.default_latitude = 31.7667
+
+; https://php.net/date.default-longitude
+;date.default_longitude = 35.2333
+
+
+[filter]
+
+[iconv]
+
+[imap]
+
+[intl]
+
+[sqlite3]
+
+[Pcre]
+
+[Pdo]
+
+[Pdo_mysql]
+pdo_mysql.default_socket=
+
+[Phar]
+
+[mail function]
+SMTP = localhost
+; https://php.net/smtp-port
+smtp_port = 25
+;sendmail_from = me@example.com
+;sendmail_path =
+;mail.force_extra_parameters =
+mail.add_x_header = Off
+;mail.log = syslog
+
+[ODBC]
+odbc.allow_persistent = On
+odbc.check_persistent = On
+odbc.max_persistent = -1
+odbc.max_links = -1
+odbc.defaultlrl = 4096
+odbc.defaultbinmode = 1
+
+[MySQLi]
+mysqli.max_persistent = -1
+mysqli.allow_persistent = On
+mysqli.max_links = -1
+mysqli.default_port = 3306
+mysqli.default_socket =
+mysqli.default_host =
+mysqli.default_user =
+mysqli.default_pw =
+mysqli.reconnect = Off
+
+[mysqlnd]
+mysqlnd.collect_statistics = On
+mysqlnd.collect_memory_statistics = Off
+
+[OCI8]
+
+[PostgreSQL]
+pgsql.allow_persistent = On
+pgsql.auto_reset_persistent = Off
+pgsql.max_persistent = -1
+pgsql.max_links = -1
+pgsql.ignore_notice = 0
+pgsql.log_notice = 0
+
+[bcmath]
+bcmath.scale = 0
+
+[browscap]
+
+[Session]
+session.save_handler = files
+session.use_strict_mode = 0
+session.use_cookies = 1
+session.use_only_cookies = 1
+session.name = PHPSESSID
+session.auto_start = 0
+session.cookie_lifetime = 0
+session.cookie_path = /
+session.cookie_domain =
+session.cookie_httponly = on
+session.cookie_secure = on
+session.cookie_samesite = Lax
+session.serialize_handler = php
+session.gc_probability = 0
+session.gc_divisor = 1000
+session.gc_maxlifetime = 1440
+session.referer_check =
+session.cache_limiter = nocache
+session.cache_expire = 180
+session.use_trans_sid = 0
+session.sid_length = 26
+session.trans_sid_tags = "a=href,area=href,frame=src,form="
+session.sid_bits_per_character = 5
+
+[Assertion]
+zend.assertions = -1
+
+[COM]
+
+[mbstring]
+
+[gd]
+
+[exif]
+
+[Tidy]
+tidy.clean_output = Off
+
+[soap]
+soap.wsdl_cache_enabled=1
+soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_ttl=86400
+soap.wsdl_cache_limit = 5
+
+[sysvshm]
+
+[ldap]
+ldap.max_links = -1
+
+[dba]
+
+[opcache]
+
+[curl]
+
+[openssl]
+
+[ffi]
 END
+
 systemctl restart php8.3-fpm.service
+
 
 #Step 4. Create Moodle Database
 #Log into MySQL and create database for Moodle.
@@ -106,27 +316,34 @@ sudo snap install mysql-workbench-community
 
 mysql -uroot -prootpassword -e "DROP DATABASE IF EXISTS ${dbname};"
 mysql -uroot -prootpassword -e "CREATE DATABASE IF NOT EXISTS ${dbname} CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-mysql -uroot -prootpassword -e "CREATE USER IF NOT EXISTS '${dbuser}'@'${dbhost}' IDENTIFIED BY \"${dbpass}\";"
+mysql -uroot -prootpassword -e "CREATE USER IF NOT EXISTS '${dbuser}'@'${dbhost}' IDENTIFIED BY "${dbpass}";"
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbuser}'@'${dbhost}';"
+mysql -uroot -prootpassword -e "GRANT SELECT ON mysql.time_zone_name TO '${dbuser}'@'${dbhost}';"
 mysql -uroot -prootpassword -e "FLUSH PRIVILEGES;"
 mysql -uroot -prootpassword -e "SHOW DATABASES;"
 
+# Nếu đã có thì bỏ qua đoạn hàm này như thế nào ?
 #Step 5. Next, edit the MariaDB default configuration file and define the innodb_file_format:
 #nano /etc/mysql/mariadb.conf.d/50-server.cnf
 #Add the following lines inside the [mysqld] section: 
+# if new php.ini configure then clear sign sharp # comment
 cat > /etc/mysql/mariadb.conf.d/50-server.cnf <<END
 [mysqld]
 innodb_file_format = Barracuda
 innodb_file_per_table = 1
 innodb_large_prefix = ON
 max_allowed_packet=128M
+
+[server]
+default-time-zone=+7:00
+
 END
 
 #Save the file then restart the MariaDB service to apply the changes.
 systemctl restart mariadb
 
-#Step 6. Download & Install Moodle
-#We will be using Git to install/update the Moodle Core Application 
+#Step 6. Download & Install ITIL
+#We will be using Git to install/update the ITIL Core Application 
 sudo apt install git -y
 
 cd /opt
