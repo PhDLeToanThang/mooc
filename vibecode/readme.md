@@ -2,8 +2,8 @@
 
 | STT | Câu hỏi | Kiểu AI Tools | Nhóm chủ đề |
 |-----|---------|---------------|-------------|
-| 0 | tôi cần viết đoạn code html5 sao cho dạng URL https://yourdomain.vn/viewexcel.html?view=fileExcel.xlsx  toàn bộ đoạn code html, js, css giúp mở xem view và modify file Excel online mà không cần download về máy cá nhân. 
-Lưu ý: đoạn code trên tôi đang chạy thử html5 trên localhost:3001 thì thư mục /files chứa file xlsx, xls. 
+| 0 | tôi cần viết đoạn code html5 sao cho dạng URL https://yourdomain.vn/viewexcel.html?view=fileExcel.xlsx  toàn bộ đoạn code html, js, css giúp mở xem view và modify file Excel online mà không cần download về máy cá nhân.<br/>
+Lưu ý: đoạn code trên tôi đang chạy thử html5 trên localhost:3001 thì thư mục /files chứa file xlsx, xls.<br/>
 ví dụ:http://localhost:3001/viewexcel.html?view=vSphereConfigurationMaximumsComparison.xlsx như cách này thì sẽ bị báo lỗi An error occurred: We're sorry, but for some reason we can't open this for you. Learn more. Do vậy, hãy sửa lại code html5 cho phép dùng cả localhost và port khác 80 , 443. và cho thao tác đổi từ View sang Edit được. | chat.qwen.ai:Qwen3.5-Plus| Web URL Tools |
 | 1 | Tôi có các files pdf dạng đuôi file .pdf đã được upload lên Moodle v3.x hoặc 4.x đều chạy trên Web Moodle rất ổn định, thế nhưng do kích thước file bị vượt giới hạn upload trên moodle <= 20MB.
 Tôi muốn bạn viết code html5 ra trang web html có thể đáp ứng chuẩn PDFview.js để load preview hiển thị được các file .pdf để cho người học có thể mở url html vẫn có thể tương tác preview được các files đuôi file .pdf cùng nằm ở thư mục với file html
