@@ -1,2 +1,3 @@
 Tôi có website html5: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html và tham khảo các yêu cầu https://docs.moodle.org/dev/Creating_a_custom_theme, https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site . 
-Hãy dựa trên website html trên và xử lý thành Moodle theme (html, php + Mustache + SCSS) theo chuẩn template moodle 3.9.0. lưu tại thư mục C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills
+Hãy dựa trên website trên và xử lý thành Moodle theme (html, php + Mustache + SCSS, lang en và vi) theo chuẩn template moodle 3.9.0. lưu tại thư mục C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills, 
+Nếu trường hợp này hỗ trợ cho import áp dụng Moodle 3.9.0 trở lên tự Self-host là chuẩn đóng gói 1. Hãy xem xét trường hợp support cho Moodle Cloud thuê host từ Azure Entra ID cloud ?
