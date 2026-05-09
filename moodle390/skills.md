@@ -1,0 +1,2 @@
+Tôi có website html5: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html và tham kh?o các yêu c?u https://docs.moodle.org/dev/Creating_a_custom_theme, https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site . 
+Hãy d?a trên website html trên và x? lý thành Moodle theme (html, php + Mustache + SCSS) theo chu?n template moodle 3.9.0. luu t?i thu m?c C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills
