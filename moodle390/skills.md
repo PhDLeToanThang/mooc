@@ -186,3 +186,25 @@ Nếu trường hợp này hỗ trợ cho import áp dụng Moodle 3.9.0 trở l
 hãy list và thiết lập các công việc, chức năng, tính năng, quy trình trình tự và toàn bộ các files templates đóng gói theo moodle 3.9.0 sau đó Hãy làm toàn bộ các phân tích trên và ra các Files code, readme...
 hãy viết lại thành định dạng SKILL.md dạng yêu cầu opencode thực hiện việc tạo full code files qnet_template moodle 3.9.0.
 ---
+10/5/2026
+14:49 pm
+>>>Tôi đã có bản Qnet_templatge.zip support cho moodle 3.9.0 , nhưng ở website https://mooc.cloud.edu.vn tôi đang chạy thật version 4.0.2 và tôi cần bạn phân tích các bước thực hiện an toàn để có thể import vào mooc và có thể backup, rollback khi update template.
+
+
+20:23 pm
+>>>Debug Tôi đang upload file  template này thì bị báo lỗi:
+Install plugin from ZIP file
+The plugin ZIP package must contain just one directory, named to match the plugin name. The file provided is not a valid plugin ZIP package.
+--->qwen3.6-plus:
+tệp qnet_template_moodle39.zip cần phải tạo và chứa thư mục có tên giống hệt
+\qnet_template_moodle39\và các files, thư mục con.
+
+>>>Khi triển khai deploy thông qua install plugin trong moodle thì khi vào màn Site Administrator thì bị báo lỗi:
+/ FILE: settings.php
+Exception - Class "theme_boost_admin_settingspage_blocks" not found
+Exception - Class "theme_boost_admin_settingspage_blocks" not found
+
+>>>SITE ADMINISTRATION: Appearance
+Exception - Class "theme_bootstrap_core_renderer" not found
+More information about this error
+https://docs.moodle.org/400/en/error/moodle/generalexceptionmessage
