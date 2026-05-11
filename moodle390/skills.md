@@ -208,3 +208,15 @@ Exception - Class "theme_boost_admin_settingspage_blocks" not found
 Exception - Class "theme_bootstrap_core_renderer" not found
 More information about this error
 https://docs.moodle.org/400/en/error/moodle/generalexceptionmessage
+
+====
+11/5/2026
+11:20 am
+>>>Tôi có website html5: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html và tham khảo các yêu cầu https://docs.moodle.org/dev/Creating_a_custom_theme, https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site .
+Hãy dựa trên website trên và xử lý thành Moodle theme (html, php + Mustache + SCSS, lang en và vi) theo chuẩn template moodle 3.9.0. lưu tại thư mục C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills,
+Nếu trường hợp này hỗ trợ cho import áp dụng Moodle 3.9.0 trở lên tự Self-host là chuẩn đóng gói 1.
+hãy list và thiết lập các công việc, chức năng, tính năng, quy trình trình tự và toàn bộ các files templates đóng gói theo moodle 3.9.0 sau đó Hãy làm toàn bộ các phân tích trên và ra các Files code, readme...
+Trong phần code template cần tạo code theme: theme_boost_admin_settingspage_blocks để cấu hình các tham số cho theme được setting và select để tránh lỗi sau khi triển khai trên mooodle (ví dụ lỗi: Exception - Class "theme_boost_admin_settingspage_blocks" not found ).  
+Trong các file code php không được viết dòng chú thích phía trên đầu nội dung file (ví dụ: // FILE: lib.php gây lỗi hiển thị ).
+Khi đã hoàn thiện các files code, js, php, css … thì việc đóng gói thành file zip phải theo phương thức đóng gói 7.zip, g.zip là có tên thư mục của dự án phía trong file .zip và tiếp theo là cấu trúc thư mục con và các files (ví dụ: qnet_template_moodle39.zip » qnet_template_moodle39 » version.php và các thư mục: lang, pix …) 
+hãy viết lại thành định dạng SKILL.md dạng yêu cầu opencode thực hiện việc tạo full code files qnet_template moodle 3.9.0.
