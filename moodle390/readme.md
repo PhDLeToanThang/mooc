@@ -180,25 +180,6 @@ compatibility: opencode
 Sau khi tạo xong, **restart OpenCode** và chạy `/skills` để kiểm tra! 🚀
 ---
 17:59 pm
->>>Tôi có đoạn prompt sau:
-Tôi có website html5: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html và tham khảo các yêu cầu https://docs.moodle.org/dev/Creating_a_custom_theme, https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site . 
-Hãy dựa trên website trên và xử lý thành Moodle theme (html, php + Mustache + SCSS, lang en và vi) theo chuẩn template moodle 3.9.0. lưu tại thư mục C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills, 
-Nếu trường hợp này hỗ trợ cho import áp dụng Moodle 3.9.0 trở lên tự Self-host là chuẩn đóng gói 1.
-hãy list và thiết lập các công việc, chức năng, tính năng, quy trình trình tự và toàn bộ các files templates đóng gói theo moodle 3.9.0 sau đó Hãy làm toàn bộ các phân tích trên và ra các Files code, readme...
-hãy viết lại thành định dạng SKILL.md dạng yêu cầu opencode thực hiện việc tạo full code files qnet_template moodle 3.9.0.
----
-## What I do
-
-- SKILL.md (Final Version - Eguru Structure Based)
-- Project: Project Skills - QNET Moodle Theme (Eguru Architecture)  
-- Target: Moodle 3.9.0+ (Bootstrap 4) 
-- Input: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html 
-- Documents:  https://docs.moodle.org/dev/Creating_a_custom_theme,
-and https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site  
-- Reference: Theme Eguru Structure & Moodle Boost API: C:\Thanglt-Document-2026\2026\QNET\Moodle\eguru hoặc https://github.com/PhDLeToanThang/mooc/tree/master/moodle402/eguru 
-- Objectie: Tạo đầy đủ source code files ở thư mục theme 'qnet_template' có đầy đủ Admin Settings (chia theo tab), Renderer chuẩn, và khả năng chọn theme ngay lập tức mà không gây lỗi ở thư mục: C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template.
-
----
 >>>Tôi có website html5: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html và tham khảo các yêu cầu https://docs.moodle.org/dev/Creating_a_custom_theme, https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site .  
 Hãy dựa trên website trên và xử lý thành Moodle theme (html, php + Mustache + SCSS, lang en và vi) theo chuẩn template moodle 3.9.0. lưu tại thư mục C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template thành Project Skills,  
 Nếu trường hợp này hỗ trợ cho import áp dụng Moodle 3.9.0 trở lên tự Self-host là chuẩn đóng gói 1.  
@@ -209,7 +190,18 @@ Khi đã hoàn thiện các files code, js, php, css … thì việc đóng gói
 Khi đã install plugin trong site Administration, tôi gặp cả lỗi: The error "Exception - Class 'theme_boost_core_renderer' not found" in Moodle usually occurs when a custom theme incorrectly extends the Boost theme's renderer, often after an upgrade. To fix it, you must update the renderer declaration in your theme's `lib.php` to `class theme_mytheme_core_renderer extends \theme_boost\output\core_renderer.`  
 hãy viết lại thành định dạng SKILL.md dạng yêu cầu opencode thực hiện việc tạo full code files qnet_template moodle 3.9.0.
 
----open-webui:glm-4.7:
+------open-webui:glm-4.7:
+
+## What I do
+
+- SKILL.md (Final Version - Eguru Structure Based)
+- Project: Project Skills - QNET Moodle Theme (Eguru Architecture)  
+- Target: Moodle 3.9.0+ (Bootstrap 4) 
+- Input: https://atcom.vn/edu/QNET/qnet.readme_v1.2.html 
+- Documents:  https://docs.moodle.org/dev/Creating_a_custom_theme,
+and https://support.moodle.com/support/solutions/articles/80000831609-moodlecloud-themes-and-customising-your-site  
+- Reference: Theme Eguru Structure & Moodle Boost API: C:\Thanglt-Document-2026\2026\QNET\Moodle\eguru hoặc https://github.com/PhDLeToanThang/mooc/tree/master/moodle402/eguru 
+- Objectie: Tạo đầy đủ source code files ở thư mục theme 'qnet_template' có đầy đủ Admin Settings (chia theo tab), Renderer chuẩn, và khả năng chọn theme ngay lập tức mà không gây lỗi ở thư mục: C:\Thanglt-Document-2026\2026\QNET\Moodle\qnet_template.
 
 ## Phase 1: Phân tích Cấu trúc Eguru & Khắc phục lỗi
 
