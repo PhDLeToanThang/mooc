@@ -1,0 +1,6 @@
+/* Custom CSS Settings
+-------------------------*/
+[[setting:customcss]]
+#page-mod-scorm-player .btn-secondary {display:none;}
+
+#page-site-index .enrolmenticons {visibility: hidden;}
