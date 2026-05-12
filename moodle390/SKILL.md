@@ -136,51 +136,70 @@ File này tạo ra các tab cấu hình: General, Footer, Social.
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-// Trang cấu hình chính cho theme
-$settings = new theme_boost_admin_settingspage_blocks('theme_qnet_template', get_string('configtitle', 'theme_qnet_template'));
+if ($hassiteconfig) {
+    // --- KHẮC PHỤC LỖI CLASS NOT FOUND ---
+    // Thay vì dùng \theme_boost\output\theme_boost_admin_settingspage (không tồn tại),
+    // ta dùng admin_settingpage chuẩn của Moodle Core.
+    $page = new admin_settingpage('theme_qnet_template', get_string('configtitle', 'theme_qnet_template'));
 
-// --- TAB: GENERAL SETTINGS ---
-$page = new admin_settingpage('theme_qnet_template_general', get_string('generalsettings', 'theme_qnet_template'));
+    // --- General Settings ---
+    $page->add(new admin_setting_heading('theme_qnet_template_general', get_string('generalheading', 'theme_qnet_template'), ''));
 
-// Brand Color
-$name = 'theme_qnet_template/brandcolor';
-$title = get_string('brandcolor', 'theme_qnet_template');
-$description = get_string('brandcolor_desc', 'theme_qnet_template');
-$default = '#1a84e6';
-$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, null);
-$setting->set_updatedcallback('theme_reset_all_caches');
-$page->add($setting);
+    // Ví dụ: Tùy chọn màu sắc (Presets)
+    $name = 'theme_qnet_template/preset';
+    $title = get_string('preset', 'theme_qnet_template');
+    $description = get_string('preset_desc', 'theme_qnet_template');
+    $default = 'default.scss';
+    $choices = [];
+    // Lấy danh sách file preset từ thư mục scss/preset
+    $presets = glob($CFG->dirroot . '/theme/qnet_template/scss/preset/*.scss');
+    if ($presets) {
+        foreach ($presets as $preset) {
+            $choices[basename($preset)] = basename($preset);
+        }
+    }
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $page->add($setting);
 
-// Logo
-$name = 'theme_qnet_template/logo';
-$title = get_string('logo', 'theme_qnet_template');
-$description = get_string('logodesc', 'theme_qnet_template');
-$setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
-$setting->set_updatedcallback('theme_reset_all_caches');
-$page->add($setting);
+    // Ví dụ: Tùy chọn Brand Color
+    $name = 'theme_qnet_template/brandcolor';
+    $title = get_string('brandcolor', 'theme_qnet_template');
+    $description = get_string('brandcolor_desc', 'theme_qnet_template');
+    $default = '#0f6cbf';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $page->add($setting);
 
-$settings->add($page);
+    // Cài đặt Logo
+    $name = 'theme_qnet_template/logo';
+    $title = get_string('logo', 'theme_qnet_template');
+    $description = get_string('logodesc', 'theme_qnet_template');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
 
-// --- TAB: FOOTER SETTINGS ---
-$page = new admin_settingpage('theme_qnet_template_footer', get_string('footersettings', 'theme_qnet_template'));
+    // Thêm trang General vào settings
+    $settings->add($page);
 
-// Phone
-$name = 'theme_qnet_template/phone';
-$title = get_string('phone', 'theme_qnet_template');
-$description = get_string('phonedesc', 'theme_qnet_template');
-$default = '';
-$setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_NOTAGS);
-$page->add($setting);
+    // --- Footer Settings (Trang thứ 2) ---
+    $page = new admin_settingpage('theme_qnet_template_footer', get_string('footersettings', 'theme_qnet_template'));
 
-// Email
-$name = 'theme_qnet_template/email';
-$title = get_string('email', 'theme_qnet_template');
-$description = get_string('emaildesc', 'theme_qnet_template');
-$default = '';
-$setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_EMAIL);
-$page->add($setting);
+    $name = 'theme_qnet_template/phone';
+    $title = get_string('phone', 'theme_qnet_template');
+    $description = get_string('phonedesc', 'theme_qnet_template');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_NOTAGS);
+    $page->add($setting);
 
-$settings->add($page);
+    $name = 'theme_qnet_template/email';
+    $title = get_string('email', 'theme_qnet_template');
+    $description = get_string('emaildesc', 'theme_qnet_template');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_EMAIL);
+    $page->add($setting);
+
+    // Thêm trang Footer vào settings
+    $settings->add($page);
+}
 ```
 
 ### 5. File: 'lang/en/theme_qnet_template.php'
@@ -229,16 +248,13 @@ $string['region-side-post'] = 'Bên phải';
 File SCSS xử lý màu sắc động.
 
 ```scss
-// Import Boost variables
 @import "../../boost/scss/variables";
 
-// QNET Custom Styles
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-// Header Styles
 #page-header {
     background-color: $primary;
     color: #fff;
@@ -252,7 +268,6 @@ body {
     }
 }
 
-// Footer Styles
 .qnet-footer {
     background-color: #212529;
     color: #adb5bd;
@@ -266,7 +281,6 @@ body {
     }
 }
 
-// Import default preset to keep Boost functionality
 @import "../../boost/scss/preset";
 ```
 
